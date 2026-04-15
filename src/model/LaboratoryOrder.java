@@ -1,5 +1,5 @@
 package model;
-
+//hola
 import java.io.Serializable;
 
 public class LaboratoryOrder implements Serializable {
