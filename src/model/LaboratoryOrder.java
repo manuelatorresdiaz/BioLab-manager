@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+//comentario de prueba
 
 public class LaboratoryOrder implements Serializable {
 
