@@ -10,17 +10,10 @@ public class DBConnection {
 
     public Connection connect() {
         try {
-            connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/biolab",
-                "root",
-                "root"
-            );
-            //Más adelante cambiar:"biolab" por el nombre real de BD
-			//"root" por tu usuario
-			//"root" por tu contraseña
-            //no me sirve conectar a database
+            connection = DriverManager.getConnection("jdbc:sqlite:biolab.db");
+            System.out.println("Connected to SQLite database successfully.");
         } catch (SQLException e) {
-            System.out.println("Error connecting to database.");
+            System.out.println("Error connecting to SQLite database.");
             e.printStackTrace();
         }
         return connection;
@@ -30,6 +23,7 @@ public class DBConnection {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
+                System.out.println("Disconnected from database.");
             }
         } catch (SQLException e) {
             System.out.println("Error disconnecting from database.");
