@@ -14,8 +14,8 @@ public class PatientRepositoryDB implements PatientRepository {
 
     private DBConnection dbConnection;
 
-    public PatientRepositoryDB() {
-        this.dbConnection = new DBConnection();
+    public PatientRepositoryDB(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     @Override

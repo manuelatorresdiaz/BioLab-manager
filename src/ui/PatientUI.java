@@ -9,6 +9,7 @@ public class PatientUI {
 
     public static void main(String[] args) {
         PatientRepository patientRepository = new PatientRepositoryDB();
+        
         PatientService patientService = new PatientService(patientRepository);
 
         Patient patient = new Patient(

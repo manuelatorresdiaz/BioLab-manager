@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="biolab.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1718"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Laboratory_Order" custom_title="0" dock_id="1" table="4,16:mainLaboratory_Order"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011300ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">CREATE TABLE Test_Category (
+    category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_name VARCHAR(100) NOT NULL,
+    description VARCHAR(255)
+);
+
+CREATE TABLE Patient (
+    patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE,
+    gender VARCHAR(20),
+    phone VARCHAR(20),
+    address VARCHAR(255)
+);
+
+CREATE TABLE Physician (
+    physician_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name VARCHAR(100) NOT NULL,
+    speciality VARCHAR(100),
+    phone VARCHAR(20),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Test (
+    test_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    test_name VARCHAR(100) NOT NULL,
+    unit VARCHAR(20),
+    description VARCHAR(255)
+);
+
+CREATE TABLE Sample (
+    sample_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sample_type VARCHAR(100),
+    collection_date DATE,
+    status VARCHAR(50)
+);
+
+CREATE TABLE Reference_Range (
+    reference_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    min_value DECIMAL(10,2),
+    max_value DECIMAL(10,2),
+    critical_min DECIMAL(10,2),
+    critical_max DECIMAL(10,2),
+    units VARCHAR(20)
+);
+
+CREATE TABLE Laboratory_Order (
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_date DATE,
+    result_date DATE,
+    status VARCHAR(50)
+);
+
+CREATE TABLE Order_Test (
+    order_id INTEGER,
+    test_id INTEGER,
+    result_value DECIMAL(10,2),
+    result_date DATE,
+    result_status VARCHAR(50),
+    PRIMARY KEY (order_id, test_id),
+    FOREIGN KEY (order_id) REFERENCES Laboratory_Order(order_id),
+    FOREIGN KEY (test_id) REFERENCES Test(test_id)
+);
+
+CREATE TABLE Report (
+    report_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    report_type VARCHAR(100),
+    generated_date DATE
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
