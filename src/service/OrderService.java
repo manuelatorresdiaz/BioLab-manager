@@ -2,30 +2,38 @@ package service;
 
 import model.LaboratoryOrder;
 import repository.OrderRepository;
+import repository.OrderRepositoryDB;
 
 import java.util.List;
 
 public class OrderService {
 
-    private OrderRepository orderRepository;
+    private OrderRepository repository = new OrderRepositoryDB();
 
-    public OrderService(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    public void createOrder(LaboratoryOrder order) {
 
-    public void addOrder(LaboratoryOrder order) {
-        orderRepository.save(order);
-    }
+        if(order.getPatientId() <= 0) {
+            System.out.println("Invalid Patient ID.");
+            return;
+        }
 
-    public void updateOrder(LaboratoryOrder order) {
-        orderRepository.update(order);
-    }
+        if(order.getPhysicianId() <= 0) {
+            System.out.println("Invalid Physician ID.");
+            return;
+        }
 
-    public void deleteOrder(int id) {
-        orderRepository.delete(id);
+        if(order.getStatus() == null || order.getStatus().isEmpty()) {
+            order.setStatus("Pending");
+        }
+
+        repository.save(order);
     }
 
     public List<LaboratoryOrder> getAllOrders() {
-        return orderRepository.findAll();
+        return repository.findAll();
+    }
+
+    public void cancelOrder(int id) {
+        repository.delete(id);
     }
 }

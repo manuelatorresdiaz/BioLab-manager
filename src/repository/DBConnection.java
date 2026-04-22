@@ -1,4 +1,5 @@
 package repository;
+package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,29 +7,30 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private Connection connection;
+    private static final String URL = "jdbc:sqlite:biolab.db";
 
-    public Connection connect() {
+    public static Connection getConnection() {
+        Connection connection = null;
+
         try {
-        	connection = DriverManager.getConnection(
-        		    "jdbc:sqlite:C:/Users/antoc/Documents/GitHub/BioLab-manager/biolab.db"
-        		);
-            System.out.println("Connected to SQLite database successfully.");
+            connection = DriverManager.getConnection(URL);
+            System.out.println("Connected to SQLite database.");
         } catch (SQLException e) {
-            System.out.println("Error connecting to SQLite database.");
+            System.out.println("Connection failed.");
             e.printStackTrace();
         }
+
         return connection;
     }
 
-    public void disconnect() {
+    public static void closeConnection(Connection connection) {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("Disconnected from database.");
+                System.out.println("Connection closed.");
             }
         } catch (SQLException e) {
-            System.out.println("Error disconnecting from database.");
+            System.out.println("Error closing connection.");
             e.printStackTrace();
         }
     }

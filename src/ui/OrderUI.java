@@ -1,29 +1,82 @@
 package ui;
 
+import java.util.Scanner;
+
 import model.*;
 import repository.*;
 import service.*;
 
 public class OrderUI {
 
-    public static void main(String[] args) {
+    private Scanner sc = new Scanner(System.in);
 
-        Patient patient = new Patient(1, "Ana", "Lopez", "2000-05-10", "Female", "123456789", "Madrid");
-        Physician physician = new Physician(1, "Carlos", "Perez", "Cardiology", "987654321", "carlos@hospital.com");
+    private OrderRepository repo = new OrderRepositoryDB();
+    private OrderService service = new OrderService(repo);
 
-        OrderRepository repo = new OrderRepositoryDB();
-        OrderService service = new OrderService(repo);
+    public void menu() {
+
+        int option;
+
+        do {
+            System.out.println("\n--- ORDER MENU ---");
+            System.out.println("1. Add Order");
+            System.out.println("2. Delete Order");
+            System.out.println("0. Back");
+
+            option = sc.nextInt();
+
+            switch (option) {
+
+                case 1:
+                    addOrder();
+                    break;
+
+                case 2:
+                    deleteOrder();
+                    break;
+            }
+
+        } while (option != 0);
+    }
+
+    private void addOrder() {
+
+        System.out.print("Patient ID: ");
+        int patientId = sc.nextInt();
+
+        System.out.print("Physician ID: ");
+        int physicianId = sc.nextInt();
+
+        sc.nextLine();
+
+        System.out.print("Order Date: ");
+        String date = sc.nextLine();
+
+        System.out.print("Status: ");
+        String status = sc.nextLine();
+
+        Patient patient = new Patient();
+        patient.setPatientId(patientId);
+
+        Physician physician = new Physician();
+        physician.setPhysicianId(physicianId);
 
         LaboratoryOrder order = new LaboratoryOrder(
-                1,
+                0,
                 patient,
                 physician,
-                "2024-04-14",
-                "Pending"
+                date,
+                status
         );
 
         service.addOrder(order);
-        service.updateOrder(order);
-        service.deleteOrder(1);
+    }
+
+    private void deleteOrder() {
+
+        System.out.print("Order ID: ");
+        int id = sc.nextInt();
+
+        service.deleteOrder(id);
     }
 }
