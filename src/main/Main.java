@@ -1,3 +1,4 @@
+package main;
 import repository.*;
 import model.Patient;
 

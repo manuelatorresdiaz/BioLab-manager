@@ -1,18 +1,18 @@
 package ui;
 
+import interfaces.PatientManager;
+import model.Patient;
+
 import java.util.List;
 import java.util.Scanner;
 
-import model.Patient;
-import service.PatientService;
-
 public class PatientUI {
 
-    private PatientService patientService;
+    private PatientManager patientManager;
     private Scanner scanner;
 
-    public PatientUI(PatientService patientService) {
-        this.patientService = patientService;
+    public PatientUI(PatientManager patientManager) {
+        this.patientManager = patientManager;
         this.scanner = new Scanner(System.in);
     }
 
@@ -48,7 +48,7 @@ public class PatientUI {
                     deletePatient();
                     break;
                 case 0:
-                    System.out.println("Exiting patient menu...");
+                    System.out.println("Exiting...");
                     break;
                 default:
                     System.out.println("Invalid option.");
@@ -64,8 +64,8 @@ public class PatientUI {
         System.out.print("Last name: ");
         String lastName = scanner.nextLine();
 
-        System.out.print("Date of birth: ");
-        String dateOfBirth = scanner.nextLine();
+        System.out.print("Date of birth (yyyy-mm-dd): ");
+        String dob = scanner.nextLine();
 
         System.out.print("Gender: ");
         String gender = scanner.nextLine();
@@ -76,36 +76,34 @@ public class PatientUI {
         System.out.print("Address: ");
         String address = scanner.nextLine();
 
-        Patient patient = new Patient(0, firstName, lastName, dateOfBirth, gender, phone, address);
-        patientService.addPatient(patient);
-
-        System.out.println("Patient added successfully.");
+        Patient patient = new Patient(0, firstName, lastName, dob, gender, phone, address);
+        patientManager.addPatient(patient);
     }
 
     private void showAllPatients() {
-        List<Patient> patients = patientService.getAllPatients();
+        List<Patient> patients = patientManager.getAllPatients();
 
         if (patients.isEmpty()) {
             System.out.println("No patients found.");
             return;
         }
 
-        for (Patient patient : patients) {
-            System.out.println("ID: " + patient.getPatientId());
-            System.out.println("Name: " + patient.getFirstName() + " " + patient.getLastName());
-            System.out.println("Date of birth: " + patient.getDateOfBirth());
-            System.out.println("Gender: " + patient.getGender());
-            System.out.println("Phone: " + patient.getPhone());
-            System.out.println("Address: " + patient.getAddress());
+        for (Patient p : patients) {
+            System.out.println("ID: " + p.getPatientId());
+            System.out.println("Name: " + p.getFirstName() + " " + p.getLastName());
+            System.out.println("Date of birth: " + p.getDateOfBirth());
+            System.out.println("Gender: " + p.getGender());
+            System.out.println("Phone: " + p.getPhone());
+            System.out.println("Address: " + p.getAddress());
             System.out.println("--------------------------");
         }
     }
 
     private void findPatientById() {
         System.out.print("Enter patient ID: ");
-        int patientId = Integer.parseInt(scanner.nextLine());
+        int id = Integer.parseInt(scanner.nextLine());
 
-        Patient patient = patientService.getPatientById(patientId);
+        Patient patient = patientManager.getPatientById(id);
 
         if (patient == null) {
             System.out.println("Patient not found.");
@@ -121,14 +119,7 @@ public class PatientUI {
 
     private void updatePatient() {
         System.out.print("Enter patient ID to update: ");
-        int patientId = Integer.parseInt(scanner.nextLine());
-
-        Patient existingPatient = patientService.getPatientById(patientId);
-
-        if (existingPatient == null) {
-            System.out.println("Patient not found.");
-            return;
-        }
+        int id = Integer.parseInt(scanner.nextLine());
 
         System.out.print("New first name: ");
         String firstName = scanner.nextLine();
@@ -136,8 +127,8 @@ public class PatientUI {
         System.out.print("New last name: ");
         String lastName = scanner.nextLine();
 
-        System.out.print("New date of birth: ");
-        String dateOfBirth = scanner.nextLine();
+        System.out.print("New date of birth (yyyy-mm-dd): ");
+        String dob = scanner.nextLine();
 
         System.out.print("New gender: ");
         String gender = scanner.nextLine();
@@ -148,24 +139,14 @@ public class PatientUI {
         System.out.print("New address: ");
         String address = scanner.nextLine();
 
-        Patient updatedPatient = new Patient(patientId, firstName, lastName, dateOfBirth, gender, phone, address);
-        patientService.updatePatient(updatedPatient);
-
-        System.out.println("Patient updated successfully.");
+        Patient patient = new Patient(id, firstName, lastName, dob, gender, phone, address);
+        patientManager.updatePatient(patient);
     }
 
     private void deletePatient() {
         System.out.print("Enter patient ID to delete: ");
-        int patientId = Integer.parseInt(scanner.nextLine());
+        int id = Integer.parseInt(scanner.nextLine());
 
-        Patient existingPatient = patientService.getPatientById(patientId);
-
-        if (existingPatient == null) {
-            System.out.println("Patient not found.");
-            return;
-        }
-
-        patientService.deletePatient(patientId);
-        System.out.println("Patient deleted successfully.");
+        patientManager.deletePatient(id);
     }
 }
