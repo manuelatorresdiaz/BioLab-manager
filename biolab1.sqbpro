@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="biolab.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1641"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="4" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="sqlite_sequence" custom_title="0" dock_id="1" table="4,15:mainsqlite_sequence"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011300ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">CREATE TABLE Administrator (
+    adminId INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullName TEXT,
+    email TEXT
+);
+
+CREATE TABLE Patient (
+    patientId INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT,
+    lastName TEXT,
+    dateOfBirth TEXT,
+    gender TEXT,
+    phone TEXT,
+    address TEXT
+);
+
+CREATE TABLE Physician (
+    physicianId INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT,
+    lastName TEXT,
+    specialty TEXT,
+    phone TEXT,
+    email TEXT
+);
+
+CREATE TABLE LaboratoryTechnician (
+    technicianId INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullName TEXT,
+    email TEXT,
+    lastName TEXT
+);
+
+CREATE TABLE TestCategory (
+    categoryId INTEGER PRIMARY KEY AUTOINCREMENT,
+    categoryName TEXT,
+    description TEXT
+);
+
+CREATE TABLE Test (
+    testId INTEGER PRIMARY KEY AUTOINCREMENT,
+    testName TEXT,
+    unit TEXT,
+    description TEXT
+);
+
+CREATE TABLE ReferenceRange (
+    referenceId INTEGER PRIMARY KEY AUTOINCREMENT,
+    minValue REAL,
+    maxValue REAL,
+    criticalMin REAL,
+    criticalMax REAL,
+    units TEXT
+);
+
+CREATE TABLE Report (
+    reportId INTEGER PRIMARY KEY AUTOINCREMENT,
+    reportType TEXT,
+    generatedDate TEXT
+);
+
+CREATE TABLE Sample (
+    sampleId INTEGER PRIMARY KEY AUTOINCREMENT,
+    sampleType TEXT,
+    collectionDate TEXT,
+    status TEXT
+);
+
+CREATE TABLE LaboratoryOrder (
+    orderId INTEGER PRIMARY KEY AUTOINCREMENT,
+    patientId INTEGER,
+    physicianId INTEGER,
+    orderDate TEXT,
+    status TEXT,
+    FOREIGN KEY (patientId) REFERENCES Patient(patientId),
+    FOREIGN KEY (physicianId) REFERENCES Physician(physicianId)
+);
+
+CREATE TABLE OrderTest (
+    orderId INTEGER,
+    testId INTEGER,
+    resultValue REAL,
+    resultDate TEXT,
+    resultStatus TEXT,
+    PRIMARY KEY (orderId, testId),
+    FOREIGN KEY (orderId) REFERENCES LaboratoryOrder(orderId),
+    FOREIGN KEY (testId) REFERENCES Test(testId)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
