@@ -20,7 +20,8 @@ public class PatientRepositoryDB implements PatientRepository {
 
     @Override
     public void save(Patient patient) {
-        String sql = "INSERT INTO Patient (patientId, firstName, lastName, dateOfBirth, gender, phone, address) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    	String sql = "INSERT INTO Patient (firstName, lastName, dateOfBirth, gender, phone, address) VALUES (?, ?, ?, ?, ?, ?)";
+        
 
         Connection conn = dbConnection.connect();
         
@@ -30,14 +31,13 @@ public class PatientRepositoryDB implements PatientRepository {
         }
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, patient.getPatientId());
-            stmt.setString(2, patient.getFirstName());
-            stmt.setString(3, patient.getLastName());
-            stmt.setDate(4, Date.valueOf(patient.getDateOfBirth()));
-            stmt.setString(5, patient.getGender());
-            stmt.setString(6, patient.getPhone());
-            stmt.setString(7, patient.getAddress());
-
+        	stmt.setString(1, patient.getFirstName());
+        	stmt.setString(2, patient.getLastName());
+        	stmt.setString(3, patient.getDateOfBirth());
+        	stmt.setString(4, patient.getGender());
+        	stmt.setString(5, patient.getPhone());
+        	stmt.setString(6, patient.getAddress());
+        	
             stmt.executeUpdate();
             System.out.println("Patient saved successfully.");
 
@@ -140,13 +140,13 @@ public class PatientRepositoryDB implements PatientRepository {
 
             while (rs.next()) {
                 Patient patient = new Patient(
-                    rs.getInt("patientId"),
-                    rs.getString("firstName"),
-                    rs.getString("lastName"),
-                    rs.getString("dateOfBirth"),
-                    rs.getString("gender"),
-                    rs.getString("phone"),
-                    rs.getString("address")
+                		rs.getInt("patientId")
+                		rs.getString("firstName")
+                		rs.getString("lastName")
+                		rs.getString("dateOfBirth")
+                		rs.getString("gender")
+                		rs.getString("phone")
+                		rs.getString("address")
                 );
 
                 patients.add(patient);
