@@ -1,4 +1,4 @@
-package model;
+package bioLabPOJOS;
 
 import java.util.Date;
 

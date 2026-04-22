@@ -1,4 +1,4 @@
-package model;
+package bioLabPOJOS;
 
 public class TestCategory {
     private int categoryId;

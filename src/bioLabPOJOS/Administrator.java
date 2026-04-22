@@ -1,28 +1,39 @@
 package bioLabPOJOS;
-//HAY QUE REVISAR
 
-import javax.persistence.Entity;
-import java.io.Serializable;
+public class Administrator {
+    private int adminId;
+    private String fullName;
+    private String email;
 
-@Entity
-public class Administrator extends User implements Serializable {
+    public Administrator() {}
 
-    private String department;
-
-    public Administrator() {
-        super();
+    public Administrator(int adminId, String fullName, String email) {
+        this.adminId = adminId;
+        this.fullName = fullName;
+        this.email = email;
     }
 
-    public Administrator(String username, String password, String department) {
-        super(username, password); // Pasa el usuario y contraseña a la clase padre
-        this.department = department;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public String getDepartment() {
-        return department;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

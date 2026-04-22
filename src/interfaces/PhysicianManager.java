@@ -1,5 +1,18 @@
 package interfaces;
 
-public class PhysicianManager {
+import java.util.List;
 
+import bioLabPOJOS.Physician;
+
+public interface PhysicianManager {
+
+    void addPhysician(Physician physician);
+
+    void updatePhysician(Physician physician);
+
+    void deletePhysician(int physicianId);
+
+    Physician getPhysicianById(int physicianId);
+
+    List<Physician> getAllPhysicians();
 }

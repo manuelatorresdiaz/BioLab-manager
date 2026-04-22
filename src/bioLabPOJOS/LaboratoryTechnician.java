@@ -1,28 +1,49 @@
 package bioLabPOJOS;
-//HAY QUE REVISAR
 
-import javax.persistence.Entity;
-import java.io.Serializable;
+public class LaboratoryTechnician {
+    private int technicianId;
+    private String fullName;
+    private String email;
+    private String lastName;
 
-@Entity
-public class LaboratoryTechnician extends User implements Serializable {
+    public LaboratoryTechnician() {}
 
-    private String shift; // Ej: "Matutino", "Vespertino"
-
-    public LaboratoryTechnician() {
-        super();
+    public LaboratoryTechnician(int technicianId, String fullName, String email, String shiftName) {
+        this.technicianId = technicianId;
+        this.fullName = fullName;
+        this.email = email;
+        this.lastName = shiftName;
     }
 
-    public LaboratoryTechnician(String username, String password, String shift) {
-        super(username, password);
-        this.shift = shift;
+    public int getTechnicianId() {
+        return technicianId;
     }
 
-    public String getShift() {
-        return shift;
+    public void setTechnicianId(int technicianId) {
+        this.technicianId = technicianId;
     }
 
-    public void setShift(String shift) {
-        this.shift = shift;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getShiftName() {
+        return lastName;
+    }
+
+    public void setShiftName(String shiftName) {
+        this.lastName = shiftName;
     }
 }
