@@ -10,10 +10,9 @@ public class DBConnection {
 
     public Connection connect() {
         try {
-            // ¡ESTE ES EL CAMBIO CLAVE! 
-            // Solo ponemos "biolab.db" y Java lo buscará en la raíz de tu proyecto
-            connection = DriverManager.getConnection("jdbc:sqlite:c:/Users/antoc/documents/GitHub/BioLab-manager/biolab.db");
-            
+        	connection = DriverManager.getConnection(
+        		    "jdbc:sqlite:C:/Users/antoc/Documents/GitHub/BioLab-manager/biolab.db"
+        		);
             System.out.println("Connected to SQLite database successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to SQLite database.");
