@@ -1,11 +1,12 @@
 package bioLabPOJOS;
 
 import java.io.Serializable;
-//comentario de prueba
 
 public class LaboratoryOrder implements Serializable {
 
-    private int orderId;
+	private static final long serialVersionUID = 4157721529360133187L;
+	
+	private int orderId;
     private Patient patient;
     private Physician physician;
     private String orderDate;
