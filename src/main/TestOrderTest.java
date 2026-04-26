@@ -1,24 +1,28 @@
-package main; // Tu paquete
+package main;
 
 import jdbc.ConnectionManager;
 import jdbc.JDBCOrderTestManager;
-import bioLabUI.OrderTestMenuUI; // Importamos tu menú visual
+import jdbc.JDBCTestManager;
+import jdbc.JDBCReferenceRangeManager;
+import bioLabUI.OrderTestMenuUI;
 
 public class TestOrderTest {
 
     public static void main(String[] args) {
-        System.out.println("Arrancando el sistema...");
+        System.out.println("Starting Laboratory Analytics System...");
 
-        // 1. Conectamos a la base de datos
+        // 1. Initialize connection
         ConnectionManager cm = new ConnectionManager();
         
-        // 2. Preparamos tu lógica (donde viven tus 4 métodos de analítica)
-        JDBCOrderTestManager manager = new JDBCOrderTestManager(cm);
+        // 2. Initialize all necessary managers
+        JDBCOrderTestManager orderManager = new JDBCOrderTestManager(cm);
+        JDBCTestManager testManager = new JDBCTestManager(cm);
+        JDBCReferenceRangeManager rangeManager = new JDBCReferenceRangeManager(cm);
         
-        // 3. Preparamos la pantalla visual y le pasamos tu lógica
-        OrderTestMenuUI menu = new OrderTestMenuUI(manager);
+        // 3. Inject managers into the UI
+        OrderTestMenuUI menu = new OrderTestMenuUI(orderManager, testManager, rangeManager);
         
-        // 4. ¡Mostramos el menú en la consola!
+        // 4. Display the menu
         menu.showMenu();
     }
 }
