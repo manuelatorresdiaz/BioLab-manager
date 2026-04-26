@@ -14,3 +14,25 @@
  * public static void close() { if (emf != null && emf.isOpen()) { emf.close();
  * } } }
  */
+package JPA;
+
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class JPAUtil {
+    private static final EntityManagerFactory emf;
+
+    static {
+        try {
+            // "BioLabPU" debe ser el nombre que pusiste en persistence.xml
+            emf = Persistence.createEntityManagerFactory("BioLabPU");
+        } catch (Throwable ex) {
+            System.err.println("Error al crear la Factoría de EntityManager: " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return emf;
+    }
+}
