@@ -28,6 +28,8 @@ public class OrderMenuUI {
             System.out.println("3. Find order by ID");
             System.out.println("4. Update order");
             System.out.println("5. Delete order");
+            System.out.println("6. View patient orders");
+            System.out.println("7. View pending orders");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -39,6 +41,8 @@ public class OrderMenuUI {
                 case 3: findOrder(); break;
                 case 4: updateOrder(); break;
                 case 5: deleteOrder(); break;
+                case 6:viewPatientOrders(); break;
+                case 7:viewPendingOrders(); break;
                 case 0: System.out.println("Bye"); break;
                 default: System.out.println("Invalid");
             }
@@ -122,5 +126,43 @@ public class OrderMenuUI {
         int id = Integer.parseInt(scanner.nextLine());
 
         orderManager.deleteOrder(id);
+    }
+    private void viewPatientOrders() {
+
+        // Displays all orders for a given patient
+        System.out.print("Enter patient ID: ");
+        int patientId = Integer.parseInt(scanner.nextLine());
+
+        List<LaboratoryOrder> orders = orderManager.getOrdersByPatientId(patientId);
+
+        if (orders.isEmpty()) {
+            System.out.println("No orders found.");
+            return;
+        }
+
+        for (LaboratoryOrder o : orders) {
+            System.out.println("Order ID: " + o.getOrderId());
+            System.out.println("Date: " + o.getOrderDate());
+            System.out.println("Status: " + o.getStatus());
+            System.out.println("------------------");
+        }
+    }
+    
+    private void viewPendingOrders() {
+
+        // Displays all pending orders
+        List<LaboratoryOrder> orders = orderManager.getPendingOrders();
+
+        if (orders.isEmpty()) {
+            System.out.println("No pending orders.");
+            return;
+        }
+
+        for (LaboratoryOrder o : orders) {
+            System.out.println("Order ID: " + o.getOrderId());
+            System.out.println("Patient ID: " + o.getPatient().getPatientId());
+            System.out.println("Date: " + o.getOrderDate());
+            System.out.println("------------------");
+        }
     }
 }
