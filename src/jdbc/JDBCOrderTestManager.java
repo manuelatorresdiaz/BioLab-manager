@@ -157,4 +157,112 @@ public class JDBCOrderTestManager implements OrderTestManager {
 
         return orderTests;
     }
+    
+ // =====================================================================
+
+    @Override
+    public List<OrderTest> getTestHistory(int testId) {
+        List<OrderTest> history = new ArrayList<>();
+        String sql = "SELECT * FROM OrderTest WHERE testId = ? ORDER BY resultDate DESC";
+        
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, testId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                OrderTest ot = new OrderTest(
+                        rs.getInt("orderId"),
+                        rs.getInt("testId"),
+                        rs.getDouble("resultValue"),
+                        new java.util.Date(), // Usando el estilo de tu equipo
+                        rs.getString("resultStatus")
+                );
+                history.add(ot);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error obteniendo el historial.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+        return history;
+    }
+
+    @Override
+    public List<Integer> getMostRequestedTests() {
+        List<Integer> topTests = new ArrayList<>();
+        String sql = "SELECT testId, COUNT(testId) AS total_requests " +
+                     "FROM OrderTest " +
+                     "GROUP BY testId " +
+                     "ORDER BY total_requests DESC";
+        
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                topTests.add(rs.getInt("testId"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error obteniendo las pruebas más pedidas.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+        return topTests;
+    }
+
+    @Override
+    public double getAverageTestValue(int testId) {
+        double average = 0.0;
+        String sql = "SELECT AVG(resultValue) AS average_value FROM OrderTest WHERE testId = ?";
+        
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, testId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                average = rs.getDouble("average_value");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error calculando el promedio.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+        return average;
+    }
+
+    @Override
+    public List<OrderTest> getAbnormalResults(int testId, double normalMin, double normalMax) {
+        List<OrderTest> abnormalResults = new ArrayList<>();
+        String sql = "SELECT * FROM OrderTest WHERE testId = ? AND (resultValue < ? OR resultValue > ?)";
+        
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, testId);
+            stmt.setDouble(2, normalMin);
+            stmt.setDouble(3, normalMax);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                OrderTest ot = new OrderTest(
+                        rs.getInt("orderId"),
+                        rs.getInt("testId"),
+                        rs.getDouble("resultValue"),
+                        new java.util.Date(), // Usando el estilo de tu equipo
+                        rs.getString("resultStatus")
+                );
+                abnormalResults.add(ot);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error buscando resultados anormales.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+        return abnormalResults;
+    }
 }
