@@ -91,4 +91,5 @@ public class JPAUserManager {
 
         return user.getPassword().equals(password);
     }
+    
 }

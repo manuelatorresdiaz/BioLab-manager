@@ -25,7 +25,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JPAUserManager userManager = new JPAUserManager();
+      /*  JPAUserManager userManager = new JPAUserManager();
 
         // Crear usuario admin por defecto si no existe
         if (userManager.findUserByUsername("admin") == null) {
@@ -37,6 +37,7 @@ public class Main {
             System.out.println("Username: admin");
             System.out.println("Password: 1234");
         }
+        */
 
         Scanner sc = new Scanner(System.in);
         LoginUI loginUI = new LoginUI();
@@ -58,8 +59,28 @@ public class Main {
             switch (option) {
 
                 case "1":
+                	
+                	// ⚠️ BYPASS: Apagamos el login real temporalmente
+                    // boolean logged = loginUI.showLogin(); 
+                    
+                    // Forzamos el acceso para poder probar los menús
+                    boolean logged = true; 
+                    System.out.println("⚠️ MODO PRUEBA: Acceso concedido automáticamente sin JPA.");
 
-                    boolean logged = loginUI.showLogin();
+                    if (logged) {
+                        
+                        // --- PREPARAMOS TUS MOTORES JDBC (Los que sí funcionan) ---
+                        jdbc.ConnectionManager cm = new jdbc.ConnectionManager();
+                        jdbc.JDBCPatientManager patientManager = new jdbc.JDBCPatientManager(cm);
+                        jdbc.JDBCPhysicianManager physicianManager = new jdbc.JDBCPhysicianManager(cm);
+                        jdbc.JDBCLaboratoryOrderManager labOrderManager = new jdbc.JDBCLaboratoryOrderManager(cm);
+                        jdbc.JDBCTestManager testManager = new jdbc.JDBCTestManager(cm);
+                        jdbc.JDBCOrderTestManager orderTestManager = new jdbc.JDBCOrderTestManager(cm);
+                        jdbc.JDBCReferenceRangeManager rangeManager = new jdbc.JDBCReferenceRangeManager(cm);
+
+                        boolean logout = false;
+
+                    /*boolean logged = loginUI.showLogin();
 
                     if (logged) {
                         
@@ -71,7 +92,7 @@ public class Main {
                         JDBCOrderTestManager orderTestManager = new JDBCOrderTestManager(cm);
                         JDBCReferenceRangeManager rangeManager = new JDBCReferenceRangeManager(cm);
                         
-                        boolean logout = false;
+                        boolean logout = false; */
 
                         while (!logout) {
 
