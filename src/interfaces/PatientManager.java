@@ -15,4 +15,7 @@ public interface PatientManager {
     Patient getPatientById(int patientId);
 
     List<Patient> getAllPatients();
+    
+    //blob
+    void updatePatientImage(int patientId, String imagePath);
 }

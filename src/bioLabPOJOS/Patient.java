@@ -14,6 +14,9 @@ public class Patient implements Serializable {
     private String phone;
     private String address;
 
+    //aditional jdbc point blob
+    private byte[] profileImage;
+    
     public Patient(int patientId, String firstName, String lastName, String dateOfBirth,
                    String gender, String phone, String address) {
         this.patientId = patientId;
@@ -79,5 +82,12 @@ public class Patient implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
     }
 }

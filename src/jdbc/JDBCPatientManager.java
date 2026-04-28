@@ -2,11 +2,16 @@ package jdbc;
 
 import interfaces.PatientManager;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import bioLabPOJOS.Patient;
+//FOR BLOB
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.io.FileInputStream; 
 
 public class JDBCPatientManager implements PatientManager {
 
@@ -150,4 +155,28 @@ public class JDBCPatientManager implements PatientManager {
             connectionManager.disconnect();
         }
     }
+    //FOR BLOB
+    @Override
+    public void updatePatientImage(int patientId, String imagePath) {
+        String sql = "UPDATE Patient SET profile_image = ? WHERE patientId = ?";
+
+        try (Connection conn = connectionManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             FileInputStream fis = new FileInputStream(imagePath)) {
+
+            stmt.setBinaryStream(1, fis);
+            stmt.setInt(2, patientId);
+
+            stmt.executeUpdate();
+            System.out.println("Patient image saved successfully.");
+
+        } catch (Exception e) {
+            System.out.println("Error saving patient image.");
+            e.printStackTrace();
+        } finally {
+            connectionManager.disconnect();
+        }
+    }
+    
+
 }

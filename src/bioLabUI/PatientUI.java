@@ -27,6 +27,7 @@ public class PatientUI {
             System.out.println("3. Find patient by ID");
             System.out.println("4. Update patient");
             System.out.println("5. Delete patient");
+            System.out.println("6. Add patient image");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -38,6 +39,7 @@ public class PatientUI {
                 case 3 -> findPatientById();
                 case 4 -> updatePatient();
                 case 5 -> deletePatient();
+                case 6 -> addPatientImage();
             }
 
         } while (option != 0);
@@ -110,5 +112,14 @@ public class PatientUI {
         System.out.print("ID: ");
         int id = Integer.parseInt(scanner.nextLine());
         patientManager.deletePatient(id);
+    }
+    private void addPatientImage() {
+        System.out.print("Patient ID: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Image path: ");
+        String imagePath = scanner.nextLine();
+
+        patientManager.updatePatientImage(id, imagePath);
     }
 }
