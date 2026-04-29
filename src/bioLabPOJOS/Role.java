@@ -1,4 +1,4 @@
-package bioLabUI;
+package bioLabPOJOS;
 
 import java.io.Serializable;
 import javax.persistence.*;
