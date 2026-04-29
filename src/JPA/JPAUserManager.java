@@ -1,11 +1,15 @@
 package JPA;
 
 import bioLabPOJOS.User;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class JPAUserManager {
 
@@ -16,6 +20,10 @@ public class JPAUserManager {
 
         try {
             tx.begin();
+            
+            String hashedPassword = encryptPassword(user.getPassword());
+            user.setPassword(hashedPassword);
+            
             em.persist(user);
             tx.commit();
 
@@ -88,8 +96,64 @@ public class JPAUserManager {
         if (user == null) {
             return false;
         }
+        String hashedInput = encryptPassword(password);
+        return user.getPassword().equals(hashedInput);
+    }
+    
+    public void updateUser(User user) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
 
-        return user.getPassword().equals(password);
+        try {
+            tx.begin();
+            em.merge(user); // merge() es la instrucción de JPA para actualizar
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void deleteUser(int id) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            User user = em.find(User.class, id); // Primero lo buscamos
+            if (user != null) {
+                em.remove(user); // Luego lo borramos
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+    
+
+    public String encryptPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error encrypting password", e);
+        }
     }
     
 }
