@@ -1,5 +1,5 @@
 package JPA;
-
+import javax.persistence.*;
 import bioLabPOJOS.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;

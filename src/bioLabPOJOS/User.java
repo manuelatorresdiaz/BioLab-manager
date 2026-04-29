@@ -1,6 +1,6 @@
 package bioLabPOJOS;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
