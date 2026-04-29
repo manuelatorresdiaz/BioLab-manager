@@ -6,13 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/hibernate-core-6.2.24.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.persistence-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jandex-3.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-j-9.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.53.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/eclipselink-2.7.10.jar"/>
-	<classpathentry kind="lib" path="lib/javax.activation-api-1.2.0.jar"/>
-	<classpathentry kind="lib" path="lib/javax.persistence_2.1.1.v201509150925.jar"/>
-	<classpathentry kind="lib" path="lib/javax.persistence-api-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/jaxb-api-2.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/MaterialJPA.zip"/>
-	<classpathentry kind="lib" path="lib/persistence.xml"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

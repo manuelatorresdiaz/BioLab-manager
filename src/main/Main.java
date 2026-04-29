@@ -6,11 +6,26 @@ import JPA.JPAUserManager;
 import bioLabPOJOS.User;
 import bioLabUI.LoginUI;
 
+import bioLabUI.PatientUI;
+import bioLabUI.PhysicianMenuUI;
+import bioLabUI.OrderMenuUI;
+import bioLabUI.TestMenuUI;
+import bioLabUI.OrderTestMenuUI;
+
+import jdbc.ConnectionManager;
+import jdbc.JDBCPatientManager;
+import jdbc.JDBCPhysicianManager;
+import jdbc.JDBCLaboratoryOrderManager;
+import jdbc.JDBCTestManager;
+import jdbc.JDBCOrderTestManager;
+import jdbc.JDBCReferenceRangeManager;
+
+
 public class Main {
 
     public static void main(String[] args) {
 
-        JPAUserManager userManager = new JPAUserManager();
+      /*  JPAUserManager userManager = new JPAUserManager();
 
         // Crear usuario admin por defecto si no existe
         if (userManager.findUserByUsername("admin") == null) {
@@ -22,6 +37,7 @@ public class Main {
             System.out.println("Username: admin");
             System.out.println("Password: 1234");
         }
+        */
 
         Scanner sc = new Scanner(System.in);
         LoginUI loginUI = new LoginUI();
@@ -43,12 +59,40 @@ public class Main {
             switch (option) {
 
                 case "1":
-
-                    boolean logged = loginUI.showLogin();
+                	
+                	// ⚠️ BYPASS: Apagamos el login real temporalmente
+                    // boolean logged = loginUI.showLogin(); 
+                    
+                    // Forzamos el acceso para poder probar los menús
+                    boolean logged = true; 
+                    System.out.println("⚠️ MODO PRUEBA: Acceso concedido automáticamente sin JPA.");
 
                     if (logged) {
+                        
+                        // --- PREPARAMOS TUS MOTORES JDBC (Los que sí funcionan) ---
+                        jdbc.ConnectionManager cm = new jdbc.ConnectionManager();
+                        jdbc.JDBCPatientManager patientManager = new jdbc.JDBCPatientManager(cm);
+                        jdbc.JDBCPhysicianManager physicianManager = new jdbc.JDBCPhysicianManager(cm);
+                        jdbc.JDBCLaboratoryOrderManager labOrderManager = new jdbc.JDBCLaboratoryOrderManager(cm);
+                        jdbc.JDBCTestManager testManager = new jdbc.JDBCTestManager(cm);
+                        jdbc.JDBCOrderTestManager orderTestManager = new jdbc.JDBCOrderTestManager(cm);
+                        jdbc.JDBCReferenceRangeManager rangeManager = new jdbc.JDBCReferenceRangeManager(cm);
 
                         boolean logout = false;
+
+                    /*boolean logged = loginUI.showLogin();
+
+                    if (logged) {
+                        
+                        ConnectionManager cm = new ConnectionManager();
+                        JDBCPatientManager patientManager = new JDBCPatientManager(cm);
+                        JDBCPhysicianManager physicianManager = new JDBCPhysicianManager(cm);
+                        JDBCLaboratoryOrderManager labOrderManager = new JDBCLaboratoryOrderManager(cm);
+                        JDBCTestManager testManager = new JDBCTestManager(cm);
+                        JDBCOrderTestManager orderTestManager = new JDBCOrderTestManager(cm);
+                        JDBCReferenceRangeManager rangeManager = new JDBCReferenceRangeManager(cm);
+                        
+                        boolean logout = false; */
 
                         while (!logout) {
 
@@ -69,23 +113,29 @@ public class Main {
                             switch (menuOption) {
 
                                 case "1":
-                                    System.out.println("Patients module coming soon.");
+                                	PatientUI patientUI = new PatientUI(patientManager);
+                                    patientUI.showMenu(); // *Asegúrate de que el método se llame showMenu()
                                     break;
+                                	
 
                                 case "2":
-                                    System.out.println("Physicians module coming soon.");
+                                	PhysicianMenuUI physicianUI = new PhysicianMenuUI(physicianManager);
+                                    physicianUI.showMenu();
                                     break;
 
                                 case "3":
-                                    System.out.println("Laboratory Orders module coming soon.");
+                                	OrderMenuUI orderUI = new OrderMenuUI(labOrderManager);
+                                    orderUI.showMenu();
                                     break;
 
                                 case "4":
-                                    System.out.println("Tests module coming soon.");
+                                	TestMenuUI testUI = new TestMenuUI(testManager);
+                                    testUI.showMenu();
                                     break;
 
                                 case "5":
-                                    System.out.println("Reports / Analytics module coming soon.");
+                                	OrderTestMenuUI analyticsUI = new OrderTestMenuUI(orderTestManager, testManager, rangeManager);
+                                    analyticsUI.showMenu();
                                     break;
 
                                 case "6":
