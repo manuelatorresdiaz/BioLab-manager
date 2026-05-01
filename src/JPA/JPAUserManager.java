@@ -2,10 +2,6 @@ package JPA;
 import javax.persistence.*;
 import bioLabPOJOS.User;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 import java.security.MessageDigest;

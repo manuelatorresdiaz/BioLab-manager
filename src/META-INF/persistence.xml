@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<persistence version="2.2"
+<persistence version="2.1"
     xmlns="http://xmlns.jcp.org/xml/ns/persistence"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
     <persistence-unit name="BioLabPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
@@ -14,9 +13,15 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:biolab.db"/>
+            
+            <!-- Generación de tablas -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            
+            <!-- LOG para ver el SQL en consola (Muy útil para comprobar nombres) -->
             <property name="eclipselink.logging.level" value="FINE"/>
+            
+            <!-- LÍNEA AÑADIDA: Script para insertar el usuario admin al arrancar -->
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/import.sql"/>
         </properties>
     </persistence-unit>
-
 </persistence>

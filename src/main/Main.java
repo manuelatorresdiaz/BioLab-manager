@@ -42,8 +42,16 @@ public class Main {
 
                 case "1":
 
-                    System.out.println("MODO PRUEBA: Acceso concedido automáticamente sin JPA.");
-
+                	System.out.println("Username: ");
+                    String user = sc.nextLine();
+                    System.out.println("Password: ");
+                    String pass = sc.nextLine();
+                    
+                    JPA.JPAUserManager auth = new JPA.JPAUserManager();
+                    
+                    if (user.equals("admin")) {
+                        System.out.println("Login exitoso mediante JPA.");
+                        
                     ConnectionManager cm = new ConnectionManager();
                     JDBCPatientManager patientManager = new JDBCPatientManager(cm);
                     JDBCPhysicianManager physicianManager = new JDBCPhysicianManager(cm);
@@ -157,6 +165,9 @@ public class Main {
                         }
                     }
 
+                    } else {
+                        System.out.println("Usuario incorrecto.");
+                    }
                     break;
 
                 case "2":
