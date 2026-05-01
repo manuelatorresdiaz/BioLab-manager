@@ -1,0 +1,23 @@
+<!-- Rule 1: The database contains a list of Users and a list of Roles -->
+<!ELEMENT BioLabDatabase (Users, Roles)>
+
+<!-- Rule 2: Lists can contain zero or more users/roles -->
+<!ELEMENT Users (User*)>
+<!ELEMENT Roles (Role*)>
+
+<!-- Rule 3: A User has a username, a password, and optionally a role -->
+<!ELEMENT User (username, password, role?)>
+<!ATTLIST User id CDATA #REQUIRED>
+
+<!-- Rule 4: Data types for User fields -->
+<!ELEMENT username (#PCDATA)>
+<!ELEMENT password (#PCDATA)>
+
+<!-- Rule 5: Role definition (inside User and in the main list) -->
+<!ELEMENT role (roleName)>
+<!ATTLIST role id CDATA #IMPLIED>
+
+<!ELEMENT Role (roleName)>
+<!ATTLIST Role id CDATA #REQUIRED>
+
+<!ELEMENT roleName (#PCDATA)>

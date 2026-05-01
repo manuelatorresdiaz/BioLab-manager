@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BioLabDatabase>
+    <Users>
+        <User id="10">
+            <username>clara_pro</username>
+            <password>1234</password>
+            <role id="1">
+                <roleName>ADMIN</roleName>
+            </role>
+        </User>
+    </Users>
+    <Roles>
+        <Role id="1">
+            <roleName>ADMIN</roleName>
+        </Role>
+    </Roles>
+</BioLabDatabase>

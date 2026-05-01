@@ -1,41 +1,36 @@
 package bioLabPOJOS;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
+import javax.xml.bind.annotation.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "role") // El nombre de tu tabla en la base de datos
+@XmlRootElement(name = "Role") // JAXB
+@XmlAccessorType(XmlAccessType.FIELD) // JAXB
 public class Role implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
+    @XmlAttribute // JPA y JAXB juntos
+    private Integer id;
 
-    @Column(name = "roleName", unique = true, nullable = false)
+    @Column(name = "role_name", nullable = false)
+    @XmlElement // JPA y JAXB juntos
     private String roleName;
 
-    public Role() {
-    }
+    // Constructor vacío obligatorio
+    public Role() {}
 
     public Role(String roleName) {
         this.roleName = roleName;
     }
 
-    public int getRoleId() {
-        return roleId;
-    }
+    // Getters y Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+    public String getRoleName() { return roleName; }
+    public void setRoleName(String roleName) { this.roleName = roleName; }
 }
