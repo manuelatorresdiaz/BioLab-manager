@@ -1,4 +1,5 @@
 package JPA;
+
 import javax.persistence.*;
 import bioLabPOJOS.User;
 
@@ -94,6 +95,23 @@ public class JPAUserManager {
         }
         String hashedInput = encryptPassword(password);
         return user.getPassword().equals(hashedInput);
+    }
+
+    public User loginAndReturnUser(String username, String password) {
+
+        User user = findUserByUsername(username);
+
+        if (user == null) {
+            return null;
+        }
+
+        String hashedInput = encryptPassword(password);
+
+        if (user.getPassword().equals(hashedInput)) {
+            return user;
+        }
+
+        return null;
     }
     
     public void updateUser(User user) {

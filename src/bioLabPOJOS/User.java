@@ -24,8 +24,9 @@ public class User implements Serializable {
     @XmlElement // <-- JPA y JAXB juntos
     private String password;
     
-    @XmlElement // <-- JAXB
-    // (Si después tus compañeros configuran la relación en BD, aquí iría un @ManyToOne)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "role_id")
+    @XmlElement
     private Role role;
 
     // Constructor vacío obligatorio para Hibernate y JAXB
