@@ -55,6 +55,13 @@ public class Main {
 
             authInit.createUser(user);
         }
+        
+        if (authInit.findUserByUsername("tech1") == null) {
+            bioLabPOJOS.Role role = new bioLabPOJOS.Role("LAB_TECHNICIAN");
+            bioLabPOJOS.User user = new bioLabPOJOS.User("tech1", "1234");
+            user.setRole(role);
+            authInit.createUser(user);
+        }
 
         while (!exit) {
 
@@ -86,7 +93,6 @@ public class Main {
                                 ? loggedUser.getRole().getRoleName()
                                 : "UNKNOWN";
 
-                        System.out.println("Login exitoso mediante JPA.");
                         System.out.println("Logged in as: " + roleName);
 
                         ConnectionManager cm = new ConnectionManager();
@@ -110,10 +116,11 @@ public class Main {
                                 System.out.println("3. Laboratory Orders");
                                 System.out.println("4. Tests");
                                 System.out.println("5. Reports / Analytics");
-                                System.out.println("6. Logout");
-                                System.out.println("7. Export XML");
-                                System.out.println("8. Import XML");
-                                System.out.println("9. Generate HTML");
+                               
+                                System.out.println("6. Export XML");
+                                System.out.println("7. Import XML");
+                                System.out.println("8. Generate HTML");
+                                System.out.println("0. Logout");
                                 System.out.print("Choose option: ");
 
                                 String opt = sc.nextLine();
@@ -140,21 +147,22 @@ public class Main {
                                         new OrderTestMenuUI(orderTestManager, testManager, rangeManager).showMenu();
                                         break;
 
-                                    case "6":
-                                        logout = true;
-                                        break;
 
-                                    case "7":
+                                    case "6":
                                         XMLDataBase db = new XMLDataBase();
                                         xmlManager.databaseToXML(db, "export.xml");
                                         break;
 
-                                    case "8":
+                                    case "7":
                                         xmlManager.xmlToDatabase("export.xml");
                                         break;
 
-                                    case "9":
+                                    case "8":
                                         xmlManager.xmlToHtml("export.xml", "biolab.xsl", "report.html");
+                                        break;
+                                        
+                                    case "0":
+                                        logout = true;
                                         break;
                                 }
                             }
@@ -276,6 +284,31 @@ public class Main {
                                     case "4":
                                         logout = true;
                                         break;
+                                }
+                            }
+                            
+                         // ----------------- MENÚ LAB TECHNICIAN -----------------
+                            else if (roleName.equalsIgnoreCase("LAB_TECHNICIAN")) {
+
+                                System.out.println("\n===== LAB TECHNICIAN MENU =====");
+                                System.out.println("1. Manage Test Catalog");
+                                System.out.println("2. Manage Laboratory Orders");
+                                System.out.println("3. Enter / Edit Test Results");
+                                System.out.println("0. Logout");
+                                System.out.print("Choose option: ");
+
+                                String opt = sc.nextLine();
+
+                                switch (opt) {
+                                    case "1": new TestMenuUI(testManager).showMenu(); 
+                                              break;
+                                    case "2": new OrderMenuUI(labOrderManager).showMenu(); 
+                                              break;
+                                    case "3": new OrderTestMenuUI(orderTestManager, testManager, rangeManager).showMenu(); 
+                                              break;
+                                    case "0": logout = true; 
+                                              break;
+                                    default: System.out.println("Invalid option."); break;
                                 }
                             }
                         }
