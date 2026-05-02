@@ -1,5 +1,6 @@
 package JPA;
 
+import interfaces.UserManager;
 import javax.persistence.*;
 import bioLabPOJOS.User;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class JPAUserManager {
+public class JPAUserManager implements UserManager {
 
     public void createUser(User user) {
 

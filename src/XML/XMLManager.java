@@ -1,5 +1,6 @@
 package XML;
 
+import interfaces.XMLManagerInterface;
 import java.io.File; // Necessary to handle the physical file
 import javax.xml.bind.JAXBContext; // The entry point to the JAXB API
 import javax.xml.bind.Marshaller;
@@ -9,7 +10,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-public class XMLManager {
+public class XMLManager implements XMLManagerInterface {
 
     /**
      * Marshalls (Exports) the database object to an XML file.

@@ -178,5 +178,41 @@ public class JDBCPatientManager implements PatientManager {
         }
     }
     
+    @Override
+    public List<Patient> findPatientsByLastName(String lastName) {
 
+        List<Patient> patients = new ArrayList<>();
+        String sql = "SELECT * FROM Patient WHERE lastName=?";
+
+        try (Connection conn = connectionManager.connect()) {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, lastName);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Patient p = new Patient(
+                        rs.getInt("patientId"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("dateOfBirth"),
+                        rs.getString("gender"),
+                        rs.getString("phone"),
+                        rs.getString("address")
+                );
+
+                patients.add(p);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error searching patients by last name.");
+            e.printStackTrace();
+        } finally {
+            connectionManager.disconnect();
+        }
+
+        return patients;
+    }
 }
