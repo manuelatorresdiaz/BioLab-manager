@@ -265,4 +265,41 @@ public class JDBCOrderTestManager implements OrderTestManager {
         }
         return abnormalResults;
     }
+    
+    @Override
+    public List<OrderTest> getResultsByPatientId(int patientId) {
+        List<OrderTest> results = new ArrayList<>();
+
+        String sql = "SELECT ot.* " +
+                     "FROM OrderTest ot " +
+                     "JOIN LaboratoryOrder lo ON ot.orderId = lo.orderId " +
+                     "WHERE lo.patientId = ?";
+
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, patientId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                OrderTest ot = new OrderTest(
+                        rs.getInt("orderId"),
+                        rs.getInt("testId"),
+                        rs.getDouble("resultValue"),
+                        new java.util.Date(),
+                        rs.getString("resultStatus")
+                );
+
+                results.add(ot);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error getting patient results.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+
+        return results;
+    }
 }

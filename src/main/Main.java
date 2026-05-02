@@ -38,15 +38,21 @@ public class Main {
 
         if (authInit.findUserByUsername("patient1") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("PATIENT");
+
             bioLabPOJOS.User user = new bioLabPOJOS.User("patient1", "1234");
             user.setRole(role);
+            user.setPatientId(1); // conecta con Patient ID 1
+
             authInit.createUser(user);
         }
 
         if (authInit.findUserByUsername("physician1") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("PHYSICIAN");
+
             bioLabPOJOS.User user = new bioLabPOJOS.User("physician1", "1234");
             user.setRole(role);
+            user.setPhysicianId(1); // conecta con Physician ID 1
+
             authInit.createUser(user);
         }
 
@@ -165,14 +171,54 @@ public class Main {
                                 String opt = sc.nextLine();
 
                                 switch (opt) {
-
-                                    case "1":
-                                        System.out.println("Showing patient orders...");
-                                        break;
-
-                                    case "2":
-                                        System.out.println("Showing test results...");
-                                        break;
+	                                case "1":
+	                                    if (loggedUser.getPatientId() != null) {
+	                                        java.util.List<bioLabPOJOS.LaboratoryOrder> myOrders =
+	                                                labOrderManager.getOrdersByPatientId(loggedUser.getPatientId());
+	
+	                                        if (myOrders.isEmpty()) {
+	                                            System.out.println("No orders found for this patient.");
+	                                        } else {
+	                                            System.out.println("--- MY LABORATORY ORDERS ---");
+	
+	                                            for (bioLabPOJOS.LaboratoryOrder order : myOrders) {
+	                                                System.out.println("Order ID: " + order.getOrderId());
+	                                                System.out.println("Patient ID: " + order.getPatient().getPatientId());
+	                                                System.out.println("Physician ID: " + order.getPhysician().getPhysicianId());
+	                                                System.out.println("Date: " + order.getOrderDate());
+	                                                System.out.println("Status: " + order.getStatus());
+	                                                System.out.println("--------------------------");
+	                                            }
+	                                        }
+	
+	                                    } else {
+	                                        System.out.println("This user is not linked to a patient.");
+	                                    }
+	                                    break;
+	
+	                                case "2":
+	                                    if (loggedUser.getPatientId() != null) {
+	                                        java.util.List<bioLabPOJOS.OrderTest> myResults =
+	                                                orderTestManager.getResultsByPatientId(loggedUser.getPatientId());
+	
+	                                        if (myResults.isEmpty()) {
+	                                            System.out.println("No test results found for this patient.");
+	                                        } else {
+	                                            System.out.println("--- MY TEST RESULTS ---");
+	
+	                                            for (bioLabPOJOS.OrderTest result : myResults) {
+	                                                System.out.println("Order ID: " + result.getOrderId());
+	                                                System.out.println("Test ID: " + result.getTestId());
+	                                                System.out.println("Result value: " + result.getResultValue());
+	                                                System.out.println("Status: " + result.getResultStatus());
+	                                                System.out.println("--------------------------");
+	                                            }
+	                                        }
+	
+	                                    } else {
+	                                        System.out.println("This user is not linked to a patient.");
+	                                    }
+	                                    break;
 
                                     case "3":
                                         logout = true;
@@ -199,7 +245,28 @@ public class Main {
                                         break;
 
                                     case "2":
-                                        new OrderMenuUI(labOrderManager).showMenu();
+                                        if (loggedUser.getPhysicianId() != null) {
+                                            java.util.List<bioLabPOJOS.LaboratoryOrder> physicianOrders =
+                                                    labOrderManager.getOrdersByPhysicianId(loggedUser.getPhysicianId());
+
+                                            if (physicianOrders.isEmpty()) {
+                                                System.out.println("No orders found for this physician.");
+                                            } else {
+                                                System.out.println("--- MY PHYSICIAN ORDERS ---");
+
+                                                for (bioLabPOJOS.LaboratoryOrder order : physicianOrders) {
+                                                    System.out.println("Order ID: " + order.getOrderId());
+                                                    System.out.println("Patient ID: " + order.getPatient().getPatientId());
+                                                    System.out.println("Physician ID: " + order.getPhysician().getPhysicianId());
+                                                    System.out.println("Date: " + order.getOrderDate());
+                                                    System.out.println("Status: " + order.getStatus());
+                                                    System.out.println("--------------------------");
+                                                }
+                                            }
+
+                                        } else {
+                                            System.out.println("This user is not linked to a physician.");
+                                        }
                                         break;
 
                                     case "3":

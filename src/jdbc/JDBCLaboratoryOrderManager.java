@@ -258,4 +258,49 @@ public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
 
         return orders;
     }
+    @Override
+    public List<LaboratoryOrder> getOrdersByPhysicianId(int physicianId) {
+
+        List<LaboratoryOrder> orders = new ArrayList<>();
+
+        String sql = "SELECT * FROM LaboratoryOrder WHERE physicianId=?";
+
+        try (Connection conn = cm.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, physicianId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Patient patient = new Patient(
+                        rs.getInt("patientId"),
+                        "", "", "", "", "", ""
+                );
+
+                Physician physician = new Physician(
+                        rs.getInt("physicianId"),
+                        "", "", "", "", ""
+                );
+
+                LaboratoryOrder order = new LaboratoryOrder(
+                        rs.getInt("orderId"),
+                        patient,
+                        physician,
+                        rs.getString("orderDate"),
+                        rs.getString("status")
+                );
+
+                orders.add(order);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error getting physician orders.");
+            e.printStackTrace();
+        } finally {
+            cm.disconnect();
+        }
+
+        return orders;
+    }
 }

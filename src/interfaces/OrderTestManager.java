@@ -33,4 +33,6 @@ public interface OrderTestManager {
 
     // 4. Identify abnormal results: Filtra los resultados que se salen del rango normal
     List<OrderTest> getAbnormalResults(int testId, double normalMin, double normalMax);
+    
+    List<OrderTest> getResultsByPatientId(int patientId);
 }

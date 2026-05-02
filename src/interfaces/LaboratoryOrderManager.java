@@ -20,4 +20,8 @@ public interface LaboratoryOrderManager {
     
     //Feature 11 View pending orders and checklist Search by 1 column other than the primary key (of your choice) in at least 1 table
     List<LaboratoryOrder> getPendingOrders();
+    
+    // View physician orders
+    List<LaboratoryOrder> getOrdersByPhysicianId(int physicianId);
+    
 }

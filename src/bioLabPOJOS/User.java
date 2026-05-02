@@ -28,7 +28,15 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id")
     @XmlElement
     private Role role;
+    
+    @Column(name = "patient_id")
+    @XmlElement
+    private Integer patientId;
 
+    @Column(name = "physician_id")
+    @XmlElement
+    private Integer physicianId;
+    
     // Constructor vacío obligatorio para Hibernate y JAXB
     public User() {}
 
@@ -50,4 +58,10 @@ public class User implements Serializable {
     // (También añadí los getters/setters del rol para que esté completo)
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+    
+    public Integer getPatientId() { return patientId; }
+    public void setPatientId(Integer patientId) { this.patientId = patientId; }
+
+    public Integer getPhysicianId() { return physicianId; }
+    public void setPhysicianId(Integer physicianId) { this.physicianId = physicianId; }
 }
