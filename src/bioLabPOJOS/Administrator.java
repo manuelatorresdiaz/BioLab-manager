@@ -1,6 +1,14 @@
 package bioLabPOJOS;
 
-public class Administrator {
+import java.io.Serializable;
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name = "Administrator")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Administrator implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private int adminId;
     private String fullName;
     private String email;
@@ -13,27 +21,12 @@ public class Administrator {
         this.email = email;
     }
 
-    public int getAdminId() {
-        return adminId;
-    }
+    public int getAdminId() { return adminId; }
+    public void setAdminId(int adminId) { this.adminId = adminId; }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

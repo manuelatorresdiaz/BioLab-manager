@@ -18,4 +18,6 @@ public interface PatientManager {
     
     //blob
     void updatePatientImage(int patientId, String imagePath);
+    
+    List<Patient> findPatientsByLastName(String lastName);
 }

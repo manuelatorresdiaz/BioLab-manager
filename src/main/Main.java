@@ -154,7 +154,7 @@ public class Main {
                                         break;
 
                                     case "9":
-                                        xmlManager.xmlToHtml("export.xml", "style.xslt", "report.html");
+                                        xmlManager.xmlToHtml("export.xml", "biolab.xsl", "report.html");
                                         break;
                                 }
                             }
