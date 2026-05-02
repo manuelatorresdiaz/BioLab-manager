@@ -1,29 +1,21 @@
 package bioLabPOJOS;
 
-import javax.persistence.Entity;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import javax.xml.bind.annotation.*;
 
-@Entity
 @XmlRootElement(name = "Administrator")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Administrator extends User {
+public class Administrator implements Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int adminId;
+    private static final long serialVersionUID = 1L;
+
+    private int adminId;
     private String fullName;
     private String email;
 
-    public Administrator() {
-        super();
-    }
+    public Administrator() {}
 
-    public Administrator(String username, String password, int adminId, String fullName, String email) {
-        super(username, password);
+    public Administrator(int adminId, String fullName, String email) {
         this.adminId = adminId;
         this.fullName = fullName;
         this.email = email;
