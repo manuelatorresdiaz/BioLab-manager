@@ -14,14 +14,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Advanced UI component for managing and analyzing laboratory test results.
+ * Integrates multiple managers to provide context-aware clinical data.
+ */
+
 public class OrderTestMenuUI {
 
     private OrderTestManager orderTestManager;
-    private JDBCTestManager testManager;             // NEW: To get test names
-    private JDBCReferenceRangeManager rangeManager;  // NEW: To get automatic ranges
+    private JDBCTestManager testManager;
+    private JDBCReferenceRangeManager rangeManager;
     private Scanner scanner;
 
-    // Updated Constructor to receive all 3 managers
+    /**
+     * Updated Constructor implementing Multi-Manager Integration.
+     * 
+     * @param orderTestManager Handles the results data.
+     * @param testManager      Handles the test catalog data.
+     * @param rangeManager     Handles clinical threshold data.
+     */
+    
     public OrderTestMenuUI(OrderTestManager orderTestManager, JDBCTestManager testManager, JDBCReferenceRangeManager rangeManager) {
         this.orderTestManager = orderTestManager;
         this.testManager = testManager;
@@ -29,6 +41,10 @@ public class OrderTestMenuUI {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the analytics and management menu.
+     */
+    
     public void showMenu() {
         int option = -1;
 
@@ -193,6 +209,10 @@ public class OrderTestMenuUI {
         System.out.printf("Average value for %s (ID: %d) is: %.2f\n", testName, testId, average);
     }
 
+    /**
+     * Cross-references actual results with clinical reference ranges.
+     */
+    
     private void viewAbnormalResults() {
         System.out.print("Enter Test ID: ");
         int testId = Integer.parseInt(scanner.nextLine());
@@ -200,7 +220,7 @@ public class OrderTestMenuUI {
         Test test = testManager.getTestById(testId);
         String testName = (test != null) ? test.getTestName() : "Unknown Test";
 
-        // INTEGRATION: Getting ranges automatically from the database
+     // Automated range detection from database
         ReferenceRange range = rangeManager.getReferenceRangeById(testId);
         
         if (range == null) {
@@ -225,9 +245,10 @@ public class OrderTestMenuUI {
         }
     }
 
-    // ==========================================================
-    // 🚀 INTEGRATED BOOTSTRAP MOTOR (MAIN)
-    // ==========================================================
+    /**
+     * Entry point for manual testing of the analytics module.
+     */
+    
     public static void main(String[] args) {
         System.out.println("Starting Laboratory Analytics System...");
 

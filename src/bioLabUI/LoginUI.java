@@ -3,16 +3,31 @@ package bioLabUI;
 import java.util.Scanner;
 import JPA.JPAUserManager;
 
+/**
+ * Handles the terminal-based login interface for BioLab Manager.
+ * It coordinates user input and communicates with the JPA layer for authentication.
+ */
+
 public class LoginUI {
 
     private Scanner sc;
     private JPAUserManager userManager;
 
+    /**
+     * Constructor initializes the input scanner and the user management controller.
+     */
+    
     public LoginUI() {
         sc = new Scanner(System.in);
         userManager = new JPAUserManager();
     }
 
+    /**
+     * Displays the login form and processes credentials.
+     * 
+     * @return true if authentication is successful, false otherwise.
+     */
+    
     public boolean showLogin() {
 
         System.out.println("===== LOGIN =====");
@@ -23,6 +38,8 @@ public class LoginUI {
         System.out.print("Password: ");
         String password = sc.nextLine();
 
+     // Attempts to authenticate through the JPA layer
+        
         boolean success = userManager.login(username, password);
 
         if (success) {

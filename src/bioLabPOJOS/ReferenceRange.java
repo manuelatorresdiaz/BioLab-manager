@@ -1,5 +1,11 @@
 package bioLabPOJOS;
 
+/**
+ * Represents the clinical reference ranges for laboratory tests.
+ * This class defines the boundaries for normal results and 
+ * triggers alerts for critical values.
+ */
+
 public class ReferenceRange {
     private int referenceId;
     private double minValue;
@@ -8,8 +14,23 @@ public class ReferenceRange {
     private double criticalMax;
     private String units;
 
+    /**
+     * Default constructor for framework compatibility.
+     */
+    
     public ReferenceRange() {}
 
+    /**
+     * Parameterized constructor to define a complete reference range.
+     * 
+     * @param referenceId Unique ID for the reference setting.
+     * @param minValue    The lower bound of the healthy/normal range.
+     * @param maxValue    The upper bound of the healthy/normal range.
+     * @param criticalMin The threshold below which a result is considered life-threatening.
+     * @param criticalMax The threshold above which a result is considered life-threatening.
+     * @param units       The measurement units (e.g., mg/dL, g/L).
+     */
+    
     public ReferenceRange(int referenceId, double minValue, double maxValue,
                           double criticalMin, double criticalMax, String units) {
         this.referenceId = referenceId;
@@ -20,6 +41,8 @@ public class ReferenceRange {
         this.units = units;
     }
 
+ // Getters and Setters
+    
     public int getReferenceId() {
         return referenceId;
     }

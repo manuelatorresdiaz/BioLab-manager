@@ -17,10 +17,22 @@ import jdbc.JDBCReferenceRangeManager;
 
 import bioLabUI.*;
 
+/**
+ * The primary navigation hub of the application.
+ * Dynamically generates a dashboard based on the User's role and initializes
+ * the necessary Persistence Managers for cross-platform (GUI/Console) interaction.
+ */
+
 public class MainMenuGUI extends JFrame {
 
+	/**
+     * Constructs the menu based on authenticated User data.
+     * 
+     * @param user The authenticated user object containing role and identity data.
+     */
+	
     public MainMenuGUI(User user) {
-
+    	// --- Window Initialization ---
         setTitle("BioLab Menu");
         setSize(400, 450);
         setLocationRelativeTo(null);
@@ -35,7 +47,8 @@ public class MainMenuGUI extends JFrame {
         panel.add(new JLabel("Role: " + role));
         panel.add(new JLabel("Some options require console interaction"));
 
-        // Managers (igual que tu Main)
+     // --- Manager Initialization (Dependency Injection) ---
+        // These managers are passed to the sub-menus to maintain database connectivity
         ConnectionManager cm = new ConnectionManager();
         JDBCPatientManager patientManager = new JDBCPatientManager(cm);
         JDBCPhysicianManager physicianManager = new JDBCPhysicianManager(cm);
@@ -46,7 +59,9 @@ public class MainMenuGUI extends JFrame {
 
         XMLManager xmlManager = new XMLManager();
 
-        // ================= ADMIN =================
+     // --- ROLE-BASED DYNAMIC MENU CONSTRUCTION ---
+
+        // ADMIN: Full system access including XML/HTML Data Portability
         if (role.equalsIgnoreCase("ADMIN")) {
 
             JButton patients = new JButton("Patients");

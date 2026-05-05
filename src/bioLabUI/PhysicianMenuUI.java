@@ -7,16 +7,31 @@ import java.util.Scanner;
 
 import bioLabPOJOS.Physician;
 
+/**
+ * User interface class responsible for managing Physician records.
+ * Facilitates administrative tasks such as registering doctors and managing their contact information.
+ */
+
 public class PhysicianMenuUI {
 
     private PhysicianManager physicianManager;
     private Scanner scanner;
 
+    /**
+     * Constructor for PhysicianMenuUI.
+     * 
+     * @param physicianManager Implementation of the physician logic layer.
+     */
+    
     public PhysicianMenuUI(PhysicianManager physicianManager) {
         this.physicianManager = physicianManager;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Main control loop for the Physician administration menu.
+     */
+    
     public void showMenu() {
         int option;
 
@@ -58,6 +73,10 @@ public class PhysicianMenuUI {
         } while (option != 0);
     }
 
+    /**
+     * Captures input to register a new medical professional in the database.
+     */
+    
     private void addPhysician() {
         System.out.print("First name: ");
         String firstName = scanner.nextLine();
@@ -74,10 +93,16 @@ public class PhysicianMenuUI {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
+     // ID 0 indicates a new record pending database auto-increment
+        
         Physician physician = new Physician(0, firstName, lastName, specialty, phone, email);
         physicianManager.addPhysician(physician);
     }
 
+    /**
+     * Retrieves and displays a formatted list of all physicians.
+     */
+    
     private void showAllPhysicians() {
         List<Physician> physicians = physicianManager.getAllPhysicians();
 
@@ -96,6 +121,10 @@ public class PhysicianMenuUI {
         }
     }
 
+    /**
+     * Searches for a specific physician by their unique identifier.
+     */
+    
     private void findPhysicianById() {
         System.out.print("Enter physician ID: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -113,6 +142,10 @@ public class PhysicianMenuUI {
         }
     }
 
+    /**
+     * Modifies existing physician details.
+     */
+    
     private void updatePhysician() {
         System.out.print("Enter physician ID to update: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -136,6 +169,10 @@ public class PhysicianMenuUI {
         physicianManager.updatePhysician(physician);
     }
 
+    /**
+     * Removes a physician record from the system.
+     */
+    
     private void deletePhysician() {
         System.out.print("Enter physician ID to delete: ");
         int id = Integer.parseInt(scanner.nextLine());

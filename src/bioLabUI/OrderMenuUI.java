@@ -8,16 +8,32 @@ import bioLabPOJOS.Physician;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Provides a text-based User Interface for managing Laboratory Orders.
+ * It handles the CRUD operations (Create, Read, Update, Delete) and 
+ * specialized filters like pending orders.
+ */
+
 public class OrderMenuUI {
 
     private LaboratoryOrderManager orderManager;
     private Scanner scanner;
 
+    /**
+     * Constructor using Dependency Injection.
+     * 
+     * @param orderManager The implementation of the order management logic.
+     */
+    
     public OrderMenuUI(LaboratoryOrderManager orderManager) {
         this.orderManager = orderManager;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Main loop for the Laboratory Order menu.
+     */
+    
     public void showMenu() {
         int option;
 
@@ -33,6 +49,8 @@ public class OrderMenuUI {
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
+         // Using parseInt to avoid common Scanner buffer issues
+            
             option = Integer.parseInt(scanner.nextLine());
 
             switch (option) {
@@ -50,6 +68,10 @@ public class OrderMenuUI {
         } while (option != 0);
     }
 
+    /**
+     * Collects data to create a new laboratory order.
+     */
+    
     private void addOrder() {
         System.out.print("Patient ID: ");
         int pId = Integer.parseInt(scanner.nextLine());
@@ -63,6 +85,8 @@ public class OrderMenuUI {
         System.out.print("Status: ");
         String status = scanner.nextLine();
 
+     // Creates dummy POJO wrappers to pass IDs to the manager
+        
         Patient p = new Patient(pId,"","","","","","");
         Physician ph = new Physician(phId,"","","","","");
 
@@ -71,6 +95,10 @@ public class OrderMenuUI {
         orderManager.addOrder(order);
     }
 
+    /**
+     * Retrieves and displays all orders in the system.
+     */
+    
     private void showAllOrders() {
         List<LaboratoryOrder> orders = orderManager.getAllOrders();
 
@@ -84,6 +112,10 @@ public class OrderMenuUI {
         }
     }
 
+    /**
+     * Searches for a specific order by its unique ID.
+     */
+    
     private void findOrder() {
         System.out.print("Order ID: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -97,6 +129,10 @@ public class OrderMenuUI {
         }
     }
 
+    /**
+     * Updates an existing order's information.
+     */
+    
     private void updateOrder() {
         System.out.print("Order ID: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -121,12 +157,21 @@ public class OrderMenuUI {
         orderManager.updateOrder(order);
     }
 
+    /**
+     * Removes an order from the database.
+     */
+    
     private void deleteOrder() {
         System.out.print("Order ID: ");
         int id = Integer.parseInt(scanner.nextLine());
 
         orderManager.deleteOrder(id);
     }
+    
+    /**
+     * Displays all laboratory orders associated with a specific patient.
+     */
+    
     private void viewPatientOrders() {
 
         // Displays all orders for a given patient
@@ -147,6 +192,10 @@ public class OrderMenuUI {
             System.out.println("------------------");
         }
     }
+    
+    /**
+     * Displays all orders that currently have a 'Pending' status.
+     */
     
     private void viewPendingOrders() {
 

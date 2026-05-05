@@ -6,16 +6,31 @@ import bioLabPOJOS.Test;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * UI component for managing the Laboratory Test Catalog.
+ * Defines the types of analyses the laboratory is capable of performing.
+ */
+
 public class TestMenuUI {
 
     private TestManager testManager;
     private Scanner scanner;
 
+    /**
+     * Constructor injecting the TestManager implementation.
+     * 
+     * @param testManager Logic handler for the test catalog.
+     */
+    
     public TestMenuUI(TestManager testManager) {
         this.testManager = testManager;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the administrative menu for test catalog management.
+     */
+    
     public void showMenu() {
         int option;
 
@@ -57,6 +72,10 @@ public class TestMenuUI {
         } while (option != 0);
     }
 
+    /**
+     * Registers a new analysis type in the laboratory system.
+     */
+    
     private void addTest() {
         // Creates a new laboratory test
         System.out.print("Test name: ");
@@ -72,6 +91,10 @@ public class TestMenuUI {
         testManager.addTest(test);
     }
 
+    /**
+     * Lists all test types currently supported by the lab.
+     */
+    
     private void showAllTests() {
         List<Test> tests = testManager.getAllTests();
 
@@ -89,6 +112,10 @@ public class TestMenuUI {
         }
     }
 
+    /**
+     * Searches for a specific test definition by ID.
+     */
+    
     private void findTest() {
         // Finds one test using its ID
         System.out.print("Test ID: ");
@@ -106,6 +133,10 @@ public class TestMenuUI {
         }
     }
 
+    /**
+     * Modifies the metadata of an existing test type.
+     */
+    
     private void updateTest() {
         // Updates a test already stored in the database
         System.out.print("Test ID: ");
@@ -124,6 +155,10 @@ public class TestMenuUI {
         testManager.updateTest(test);
     }
 
+    /**
+     * Removes a test type from the catalog.
+     */
+    
     private void deleteTest() {
         // Deletes a test by its ID
         System.out.print("Test ID: ");

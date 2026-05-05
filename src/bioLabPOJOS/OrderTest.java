@@ -3,7 +3,17 @@ package bioLabPOJOS;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Represents the association between a Laboratory Order and a specific Test.
+ * This class stores the actual clinical results, including values, dates, and status.
+ */
+
 public class OrderTest implements Serializable {
+	
+	/**
+     * Unique version identifier for the serialization mechanism.
+     * Ensures that the sender and receiver of a serialized object maintain compatibility.
+     */
 
     // Serializable allows this object to be converted into bytes
     // so it can be saved to a file, sent through a network, or transferred between systems.
@@ -16,9 +26,23 @@ public class OrderTest implements Serializable {
     private Date resultDate;
     private String resultStatus;
 
+    /**
+     * Default constructor required for framework compatibility (JAXB/JPA).
+     */
+    
     public OrderTest() {
     }
 
+    /**
+     * Parameterized constructor to initialize a test result record.
+     * 
+     * @param orderId      The ID of the order this test belongs to.
+     * @param testId       The ID of the test performed.
+     * @param resultValue  The numerical value obtained from the laboratory analysis.
+     * @param resultDate   The timestamp when the result was recorded.
+     * @param resultStatus The current status of the result (e.g., Pending, Validated).
+     */
+    
     public OrderTest(int orderId, int testId, double resultValue, Date resultDate, String resultStatus) {
         this.orderId = orderId;
         this.testId = testId;
@@ -27,6 +51,8 @@ public class OrderTest implements Serializable {
         this.resultStatus = resultStatus;
     }
 
+ // Getters and Setters
+    
     public int getOrderId() {
         return orderId;
     }
@@ -67,6 +93,10 @@ public class OrderTest implements Serializable {
         this.resultStatus = resultStatus;
     }
 
+    /**
+     * Returns a string representation of the test result for logging or debugging.
+     */
+    
     @Override
     public String toString() {
         return "OrderTest{" +

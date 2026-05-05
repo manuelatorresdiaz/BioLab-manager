@@ -6,16 +6,31 @@ import bioLabPOJOS.ReferenceRange;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * UI component for defining clinical reference thresholds.
+ * These ranges are used by the system to automatically validate patient test results.
+ */
+
 public class ReferenceRangeMenuUI {
 
     private ReferenceRangeManager referenceRangeManager;
     private Scanner scanner;
 
+    /**
+     * Constructor injecting the logic layer for reference ranges.
+     * 
+     * @param referenceRangeManager Logic handler for clinical thresholds.
+     */
+    
     public ReferenceRangeMenuUI(ReferenceRangeManager referenceRangeManager) {
         this.referenceRangeManager = referenceRangeManager;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the administrative menu for clinical range configuration.
+     */
+    
     public void showMenu() {
         int option;
 
@@ -57,6 +72,10 @@ public class ReferenceRangeMenuUI {
         } while (option != 0);
     }
 
+    /**
+     * Registers a new set of clinical thresholds (Normal and Critical).
+     */
+    
     private void addReferenceRange() {
         // Creates a new reference range
         System.out.print("Min value: ");
@@ -74,6 +93,8 @@ public class ReferenceRangeMenuUI {
         System.out.print("Units: ");
         String units = scanner.nextLine();
 
+     // ID 0 for auto-increment in DB
+        
         ReferenceRange referenceRange = new ReferenceRange(
                 0, minValue, maxValue, criticalMin, criticalMax, units
         );
@@ -81,6 +102,10 @@ public class ReferenceRangeMenuUI {
         referenceRangeManager.addReferenceRange(referenceRange);
     }
 
+    /**
+     * Displays all configured clinical ranges.
+     */
+    
     private void showAllReferenceRanges() {
         List<ReferenceRange> referenceRanges = referenceRangeManager.getAllReferenceRanges();
 
@@ -100,6 +125,10 @@ public class ReferenceRangeMenuUI {
         }
     }
 
+    /**
+     * Retrieves specific range data by ID.
+     */
+    
     private void findReferenceRange() {
         // Finds one reference range by ID
         System.out.print("Reference ID: ");
@@ -119,6 +148,10 @@ public class ReferenceRangeMenuUI {
         }
     }
 
+    /**
+     * Updates an existing clinical threshold set.
+     */
+    
     private void updateReferenceRange() {
         // Updates a stored reference range
         System.out.print("Reference ID: ");
@@ -146,6 +179,10 @@ public class ReferenceRangeMenuUI {
         referenceRangeManager.updateReferenceRange(referenceRange);
     }
 
+    /**
+     * Removes a clinical threshold set.
+     */
+    
     private void deleteReferenceRange() {
         // Deletes a reference range by ID
         System.out.print("Reference ID: ");
