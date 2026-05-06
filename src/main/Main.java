@@ -287,7 +287,7 @@ public class Main {
                                 }
                             }
                             
-                         // ----------------- MENÚ LAB TECHNICIAN -----------------
+                         // ----------------- LAB TECHNICIAN -----------------
                             else if (roleName.equalsIgnoreCase("LAB_TECHNICIAN")) {
 
                                 System.out.println("\n===== LAB TECHNICIAN MENU =====");
