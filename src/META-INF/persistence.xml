@@ -15,7 +15,7 @@
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:biolab.db"/>
 
-            <property name="eclipselink.ddl-generation" value="none"/>
+			<property name="eclipselink.ddl-generation" value="none"/>
             <property name="eclipselink.logging.level" value="SEVERE"/>
         </properties>
     </persistence-unit>

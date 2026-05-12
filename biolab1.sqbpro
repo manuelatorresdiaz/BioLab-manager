@@ -65,15 +65,7 @@ CREATE TABLE Sample (
     status TEXT
 );
 
-CREATE TABLE LaboratoryOrder (
-    orderId INTEGER PRIMARY KEY AUTOINCREMENT,
-    patientId INTEGER,
-    physicianId INTEGER,
-    orderDate TEXT,
-    status TEXT,
-    FOREIGN KEY (patientId) REFERENCES Patient(patientId),
-    FOREIGN KEY (physicianId) REFERENCES Physician(physicianId)
-);
+CREATE TABLE LaboratoryOrder (    orderId INTEGER PRIMARY KEY AUTOINCREMENT,    patientId INTEGER,    physicianId INTEGER,    orderDate TEXT,    status TEXT,    FOREIGN KEY (patientId)    REFERENCES Patient(patientId)    ON DELETE RESTRICT,    FOREIGN KEY (physicianId)    REFERENCES Physician(physicianId)    ON DELETE RESTRICT);
 
 CREATE TABLE OrderTest (
     orderId INTEGER,
@@ -82,6 +74,5 @@ CREATE TABLE OrderTest (
     resultDate TEXT,
     resultStatus TEXT,
     PRIMARY KEY (orderId, testId),
-    FOREIGN KEY (orderId) REFERENCES LaboratoryOrder(orderId),
-    FOREIGN KEY (testId) REFERENCES Test(testId)
+   FOREIGN KEY (orderId)	REFERENCES LaboratoryOrder(orderId)	ON DELETE RESTRICT,	FOREIGN KEY (testId)	REFERENCES Test(testId)	ON DELETE RESTRICT
 );</sql><current_tab id="0"/></tab_sql></sqlb_project>
