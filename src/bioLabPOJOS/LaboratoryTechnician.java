@@ -9,7 +9,7 @@ public class LaboratoryTechnician {
     private int technicianId;
     private String fullName;
     private String email;
-    private String lastName;
+    private String shiftName;
 
     /**
      * Default constructor for framework compatibility and manual instantiation.
@@ -60,10 +60,10 @@ public class LaboratoryTechnician {
     }
 
     public String getShiftName() {
-        return lastName;
+        return shiftName;
     }
 
     public void setShiftName(String shiftName) {
-        this.lastName = shiftName;
+        this.shiftName = shiftName;
     }
 }
