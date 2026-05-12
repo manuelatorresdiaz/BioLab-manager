@@ -30,7 +30,7 @@ public class LaboratoryTechnician {
         this.technicianId = technicianId;
         this.fullName = fullName;
         this.email = email;
-        this.lastName = shiftName;
+        this.shiftName = shiftName;
     }
 
  // Getters and Setters
