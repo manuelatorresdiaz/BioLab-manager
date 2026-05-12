@@ -42,6 +42,18 @@ public interface PatientManager {
      */
     void updatePatientImage(int patientId, String imagePath);
     /**
+     * Binary Data Retrieval:
+     * Recovers a patient's profile image stored as a BLOB in the database
+     * and exports it back to a physical image file.
+     *
+     * This method demonstrates how binary streams can be read from JDBC
+     * using InputStream and reconstructed into a local file.
+     *
+     * @param patientId The ID of the patient whose image will be retrieved.
+     * @param outputPath The destination path where the image file will be saved.
+     */
+    void loadPatientImage(int patientId, String outputPath);
+    /**
      * Search Filter: Finds patients based on their last name.
      * Useful for administrative lookups when the ID is unknown.
      * * @param lastName The surname to search for.

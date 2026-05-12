@@ -1,6 +1,8 @@
 package jdbc;
 
 import interfaces.PatientManager;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 
 import java.sql.*;
@@ -180,6 +182,51 @@ public class JDBCPatientManager implements PatientManager {
         } catch (Exception e) {
             System.out.println("Error saving patient image.");
             e.printStackTrace();
+        } finally {
+            connectionManager.disconnect();
+        }
+    }
+    
+    public void loadPatientImage(int patientId, String outputPath) {
+
+        String sql = "SELECT profile_image FROM Patient WHERE patientId = ?";
+
+        try (Connection conn = connectionManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, patientId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                InputStream is = rs.getBinaryStream("profile_image");
+
+                if (is != null) {
+
+                    FileOutputStream fos = new FileOutputStream(outputPath);
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+
+                    while ((bytesRead = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, bytesRead);
+                    }
+
+                    fos.close();
+                    is.close();
+
+                    System.out.println("Patient image loaded successfully.");
+
+                } else {
+                    System.out.println("This patient has no image.");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading patient image.");
+            e.printStackTrace();
+
         } finally {
             connectionManager.disconnect();
         }
