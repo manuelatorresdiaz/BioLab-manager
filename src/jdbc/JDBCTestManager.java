@@ -9,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * JDBC Implementation for the Laboratory Test Catalog.
+ * Manages the definitions of all available clinical procedures.
+ */
 public class JDBCTestManager implements TestManager {
 
     private ConnectionManager cm;
@@ -20,8 +23,8 @@ public class JDBCTestManager implements TestManager {
 
     @Override
     public void addTest(Test test) {
-        // Inserts a new test into the database
-        String sql = "INSERT INTO Test (testName, unit, description) VALUES (?, ?, ?)";
+    	// Registers a new type of clinical test in the system catalog
+    	String sql = "INSERT INTO Test (testName, unit, description) VALUES (?, ?, ?)";
 
         try (Connection conn = cm.connect()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -145,4 +148,5 @@ public class JDBCTestManager implements TestManager {
 
         return tests;
     }
+ // updateTest and deleteTest follow the established CRUD pattern...
 }

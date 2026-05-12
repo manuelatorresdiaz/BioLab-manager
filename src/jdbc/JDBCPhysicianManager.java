@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bioLabPOJOS.Physician;
-
+/**
+ * JDBC implementation for managing medical staff records.
+ * Provides persistence for physician contact info and clinical specialties.
+ */
 public class JDBCPhysicianManager implements PhysicianManager {
 
     private ConnectionManager cm;
@@ -149,4 +152,5 @@ public class JDBCPhysicianManager implements PhysicianManager {
 
         return physicians;
     }
+ // updatePhysician and deletePhysician follow the standard PreparedStatement logic...
 }

@@ -8,7 +8,10 @@ import bioLabPOJOS.Physician;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * JDBC implementation for managing laboratory clinical orders.
+ * Handles relational mapping between Orders, Patients, and Physicians.
+ */
 public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
 
     private ConnectionManager cm;
@@ -23,7 +26,7 @@ public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
 
         try (Connection conn = cm.connect()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-
+         // Extracting IDs from the associated POJO objects (Relational Mapping)
             stmt.setInt(1, order.getPatient().getPatientId());
             stmt.setInt(2, order.getPhysician().getPhysicianId());
             stmt.setString(3, order.getOrderDate());
@@ -95,7 +98,7 @@ public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-
+            	// Constructing minimal Patient/Physician objects to satisfy the constructor
                 Patient patient = new Patient(
                         rs.getInt("patientId"),
                         "", "", "", "", "", ""
@@ -169,8 +172,7 @@ public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
     
     @Override
     public List<LaboratoryOrder> getOrdersByPatientId(int patientId) {
-
-        // Retrieves all orders for a specific patient
+    	// Feature 9: View patient orders
         List<LaboratoryOrder> orders = new ArrayList<>();
 
         String sql = "SELECT * FROM LaboratoryOrder WHERE patientId=?";
@@ -216,8 +218,7 @@ public class JDBCLaboratoryOrderManager implements LaboratoryOrderManager {
     
     @Override
     public List<LaboratoryOrder> getPendingOrders() {
-
-        // Retrieves all orders with status = 'pending'
+    	// Feature 11: Search by status (non-primary key column)
         List<LaboratoryOrder> orders = new ArrayList<>();
 
         String sql = "SELECT * FROM LaboratoryOrder WHERE status = 'pending'";

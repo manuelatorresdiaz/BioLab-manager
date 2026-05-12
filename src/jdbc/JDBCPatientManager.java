@@ -12,7 +12,10 @@ import bioLabPOJOS.Patient;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.io.FileInputStream; 
-
+/**
+ * JDBC implementation for Patient records.
+ * Features: Standard CRUD and BLOB (Binary Large Object) management for profile images.
+ */
 public class JDBCPatientManager implements PatientManager {
 
     private ConnectionManager connectionManager;
@@ -110,7 +113,6 @@ public class JDBCPatientManager implements PatientManager {
 
         return patient;
     }
-
     @Override
     public void updatePatient(Patient patient) {
         String sql = "UPDATE Patient SET firstName=?, lastName=?, dateOfBirth=?, gender=?, phone=?, address=? WHERE patientId=?";
@@ -155,7 +157,12 @@ public class JDBCPatientManager implements PatientManager {
             connectionManager.disconnect();
         }
     }
-    //FOR BLOB
+ // --- BLOB HANDLING ---
+
+    /**
+     * Updates the patient's profile picture using a file stream.
+     * Demonstrates how to store binary data (BLOB) in a relational database.
+     */
     @Override
     public void updatePatientImage(int patientId, String imagePath) {
         String sql = "UPDATE Patient SET profile_image = ? WHERE patientId = ?";
@@ -215,4 +222,5 @@ public class JDBCPatientManager implements PatientManager {
 
         return patients;
     }
+ // Additional CRUD methods (getAll, getById, update, delete) follow the established pattern...
 }
