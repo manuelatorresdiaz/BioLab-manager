@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.*;
 /**
  * Represents a system user for authentication and authorization.
  * This class maps user credentials to specific roles and profiles (Patient or Physician).
+ * Credentials: Who are you?
+ * Authorization: what you are allowed to do
+ * Identity link: which physical human being in the real world does this account belong to?
  */
 
 @Entity
@@ -33,6 +36,8 @@ public class User implements Serializable {
      */
     
     @Column(name = "username", unique = true, nullable = false)
+    //unique = true: It tells JPA to instruct SQLite: "Do not allow two rows to have the same username." 
+    //nullable = false: Ensures you can never have a "ghost" user with a blank username.
     @XmlElement
     private String username;
 
@@ -49,8 +54,13 @@ public class User implements Serializable {
      * Uses PERSIST cascade to ensure roles are saved alongside the user if necessary.
      */
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "role_id")
+    @ManyToOne(cascade = CascadeType.PERSIST) //It means Many Users can share One Role
+    /*
+     * If I create a new User in Java, and I attach a brand new Role to it that isn't in the database 
+     * yet, when I save the User, automatically save (persist) the Role into the database first so the 
+     * User doesn't crash
+     */
+    @JoinColumn(name = "role_id") //Tells JPA that the User table has a foreign key column called role_id that points to the Role table.
     @XmlElement
     private Role role;
 
@@ -60,7 +70,7 @@ public class User implements Serializable {
     
     @Column(name = "patient_id")
     @XmlElement
-    private Integer patientId;
+    private Integer patientId; //integer defaults to null
 
     /**
      * Optional link to a Physician profile ID.

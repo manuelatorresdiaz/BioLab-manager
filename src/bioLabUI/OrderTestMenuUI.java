@@ -17,6 +17,8 @@ import java.util.Scanner;
 /**
  * Advanced UI component for managing and analyzing laboratory test results.
  * Integrates multiple managers to provide context-aware clinical data.
+ * It does basic CRUD operations (Create, Read, Update, Delete) for test results, but its true power 
+ * lies in the Analytics section (options 6 through 9), where it acts as a medical calculator.
  */
 
 public class OrderTestMenuUI {
@@ -167,6 +169,10 @@ public class OrderTestMenuUI {
         // INTEGRATION: Getting real test name
         Test test = testManager.getTestById(testId);
         String testName = (test != null) ? test.getTestName() : "Unknown Test";
+        /*Because the OrderTest database table only stores the testId (an integer), printing "Test ID 1" 
+         * on the screen is useless to a doctor. You use the testManager to fetch the actual string 
+         * name (e.g., "Hemoglobin") so the UI is human-readable
+         */
         
         List<OrderTest> history = orderTestManager.getTestHistory(testId);
         if (history.isEmpty()) {
@@ -243,28 +249,13 @@ public class OrderTestMenuUI {
                 System.out.println("Order ID: " + ot.getOrderId() + " | Abnormal Value: " + ot.getResultValue());
             }
         }
+        /*
+         * The user types a Test ID. The system automatically asks the rangeManager what the healthy 
+         * bounds are. Then, it feeds those bounds directly into the orderTestManager's SQL query to 
+         * filter out only the dangerous results.
+         */
     }
-
-    /**
-     * Entry point for manual testing of the analytics module.
-     */
     
-    public static void main(String[] args) {
-        System.out.println("Starting Laboratory Analytics System...");
-
-        // 1. Connect to Database
-        ConnectionManager cm = new ConnectionManager();
-        
-        // 2. Prepare ALL the managers needed for integration
-        JDBCOrderTestManager orderManager = new JDBCOrderTestManager(cm);
-        JDBCTestManager testManager = new JDBCTestManager(cm);
-        JDBCReferenceRangeManager rangeManager = new JDBCReferenceRangeManager(cm);
-        
-        // 3. Prepare the UI and pass all managers
-        OrderTestMenuUI menu = new OrderTestMenuUI(orderManager, testManager, rangeManager);
-        
-        // 4. Show the menu!
-        menu.showMenu();
-    }
+  
 }
         		

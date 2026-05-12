@@ -20,8 +20,8 @@ public class OrderTest implements Serializable {
     // serialVersionUID is the version identifier of the class during serialization.
     private static final long serialVersionUID = 1L;
 
-    private int orderId;
-    private int testId;
+    private int orderId; //FK
+    private int testId; // FK
     private double resultValue;
     private Date resultDate;
     private String resultStatus;

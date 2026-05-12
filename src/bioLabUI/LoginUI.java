@@ -5,7 +5,9 @@ import JPA.JPAUserManager;
 
 /**
  * Handles the terminal-based login interface for BioLab Manager.
- * It coordinates user input and communicates with the JPA layer for authentication.
+ * It coordinates user input and communicates with the JPAUserManager for authentication.
+ * Does not know how to read the database, and it does not know what a SQL query is. It just collects 
+ * data and reports back.
  */
 
 public class LoginUI {

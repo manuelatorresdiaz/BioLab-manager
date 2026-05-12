@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.*;
  * This class serves as a POJO for data persistence and XML serialization.
  */
 
-@XmlRootElement(name = "Administrator")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Administrator") //When you convert this object into XML text, wrap everything inside a main tag called <Administrator>
+@XmlAccessorType(XmlAccessType.FIELD) //To create the XML, read my private variables directly (adminId, fullName, email), don't waste time using the Getters methods
 public class Administrator implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,7 +19,9 @@ public class Administrator implements Serializable {
     private String email;
 
     /**
-     * Default constructor for JAXB and JPA compatibility.
+     * Default constructor for JAXB and JPA compatibility.  
+     * When they import data from an XML file or from SQL, they first create a "blank" object using 
+     * this constructor, and then they use the Setters to fill it up.
      */
     
     public Administrator() {}
