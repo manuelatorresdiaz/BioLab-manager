@@ -9,19 +9,23 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
+/**
+ * Implementation of the XML Management Interface.
+ * Handles the serialization (Marshalling), deserialization (Unmarshalling),
+ * and XSLT transformation of laboratory data.
+ */
 public class XMLManager implements XMLManagerInterface {
-
-    /**
-     * Marshalls (Exports) the database object to an XML file.
+	/**
+     * Converts a Java object structure (XMLDataBase) into a physical XML file.
+     * Uses JAXB Marshalling with formatted output for readability.
      */
     public void databaseToXML(XMLDataBase database, String filePath) {
         try {
-            // Initialize the JAXB Context for our specific wrapper class
+        	// Context initialization for the wrapper class
             JAXBContext jaxbContext = JAXBContext.newInstance(XMLDataBase.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             
-            // Set property for nice formatting (line breaks and tabs)
+            // Enable 'pretty-printing' to make the XML human-readable
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             
             File file = new File(filePath);
@@ -36,7 +40,8 @@ public class XMLManager implements XMLManagerInterface {
     }
 
     /**
-     * Unmarshalls (Imports) an XML file back into a Java object.
+     * Parses an XML file and reconstructs the Java object hierarchy.
+     * Essential for data recovery and importing external clinical records.
      */
     public XMLDataBase xmlToDatabase(String filePath) {
         try {
@@ -44,7 +49,7 @@ public class XMLManager implements XMLManagerInterface {
             JAXBContext jaxbContext = JAXBContext.newInstance(XMLDataBase.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             
-            // Convert XML file content back to our Java class
+            // Reconstruct the XMLDataBase object from the file source
             XMLDataBase database = (XMLDataBase) unmarshaller.unmarshal(file);
             System.out.println("Database successfully imported from XML.");
             
@@ -56,15 +61,20 @@ public class XMLManager implements XMLManagerInterface {
             return null;
         }
     }
+    /**
+     * Applies an XSLT stylesheet to an XML file to produce an HTML document.
+     * This allows for professional visualization of the laboratory data.
+     */
     public void xmlToHtml(String xmlPath, String xsltPath, String htmlPath) {
         try {
+        	// Initialize the Transformer engine
             TransformerFactory factory = TransformerFactory.newInstance();
             StreamSource xslt = new StreamSource(new File(xsltPath));
             Transformer transformer = factory.newTransformer(xslt);
-
+            // Set source and destination streams
             StreamSource xml = new StreamSource(new File(xmlPath));
             StreamResult html = new StreamResult(new File(htmlPath));
-
+            // Execute the transformation
             transformer.transform(xml, html);
             System.out.println("HTML report generated successfully: " + htmlPath);
         } catch (Exception e) {
