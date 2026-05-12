@@ -8,7 +8,11 @@ import java.util.List;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+/**
+ * JPA Implementation for User Authentication and Security.
+ * This class handles the persistence of user credentials using ORM 
+ * and ensures passwords are never stored in plain text.
+ */
 public class JPAUserManager implements UserManager {
 
     public void createUser(User user) {
@@ -18,7 +22,7 @@ public class JPAUserManager implements UserManager {
 
         try {
             tx.begin();
-            
+         // Security: Hash the password before it ever hits the database
             String hashedPassword = encryptPassword(user.getPassword());
             user.setPassword(hashedPassword);
             
@@ -68,6 +72,7 @@ public class JPAUserManager implements UserManager {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
 
         try {
+        	// Using JPQL (Java Persistence Query Language) for flexible searching
             TypedQuery<User> query = em.createQuery(
                     "SELECT u FROM User u WHERE u.username = :username",
                     User.class);
@@ -105,7 +110,7 @@ public class JPAUserManager implements UserManager {
         if (user == null) {
             return null;
         }
-
+     // Verify the input by hashing it and comparing it to the stored hash
         String hashedInput = encryptPassword(password);
 
         if (user.getPassword().equals(hashedInput)) {
@@ -121,7 +126,7 @@ public class JPAUserManager implements UserManager {
 
         try {
             tx.begin();
-            em.merge(user); // merge() es la instrucción de JPA para actualizar
+            em.merge(user);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -139,9 +144,9 @@ public class JPAUserManager implements UserManager {
 
         try {
             tx.begin();
-            User user = em.find(User.class, id); // Primero lo buscamos
+            User user = em.find(User.class, id);
             if (user != null) {
-                em.remove(user); // Luego lo borramos
+                em.remove(user);
             }
             tx.commit();
         } catch (Exception e) {
@@ -157,6 +162,7 @@ public class JPAUserManager implements UserManager {
 
     public String encryptPassword(String password) {
         try {
+        	// Standard SHA-256 Hashing Implementation
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());
             StringBuilder hexString = new StringBuilder();
@@ -170,5 +176,5 @@ public class JPAUserManager implements UserManager {
             throw new RuntimeException("Error encrypting password", e);
         }
     }
-    
+ // updateAndMerge and delete logic using em.merge() and em.remove()...
 }

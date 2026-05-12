@@ -17,7 +17,10 @@ import jdbc.JDBCLaboratoryOrderManager;
 import jdbc.JDBCTestManager;
 import jdbc.JDBCOrderTestManager;
 import jdbc.JDBCReferenceRangeManager;
-
+/**
+ * Main Entry Point for the BioLab LIS.
+ * Orchestrates Security (JPA), Clinical Data (JDBC), and Data Portability (XML).
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -25,17 +28,18 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean exit = false;
         XMLManager xmlManager = new XMLManager();
-
-        // 🔴 CREAR USUARIOS SI NO EXISTEN
+        
+     // --- SYSTEM INITIALIZATION (BOOTSTRAPPING) ---
+        // We use JPA to check if default users exist, ensuring the system is never locked.
         JPA.JPAUserManager authInit = new JPA.JPAUserManager();
-
+     // Initialize Admin account
         if (authInit.findUserByUsername("admin") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("ADMIN");
             bioLabPOJOS.User admin = new bioLabPOJOS.User("admin", "1234");
             admin.setRole(role);
             authInit.createUser(admin);
         }
-
+     // Initialize a Test Patient linked to Patient ID 1 in JDBC
         if (authInit.findUserByUsername("patient1") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("PATIENT");
 
@@ -45,7 +49,7 @@ public class Main {
 
             authInit.createUser(user);
         }
-
+     // Initialize a Test Physician linked to Physician ID 1 in JDBC
         if (authInit.findUserByUsername("physician1") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("PHYSICIAN");
 
@@ -55,14 +59,14 @@ public class Main {
 
             authInit.createUser(user);
         }
-        
+     // Initialize a Lab Technician for operational tasks
         if (authInit.findUserByUsername("tech1") == null) {
             bioLabPOJOS.Role role = new bioLabPOJOS.Role("LAB_TECHNICIAN");
             bioLabPOJOS.User user = new bioLabPOJOS.User("tech1", "1234");
             user.setRole(role);
             authInit.createUser(user);
         }
-
+     // --- MAIN APPLICATION LOOP ---
         while (!exit) {
 
             System.out.println("\n=================================");
@@ -77,7 +81,7 @@ public class Main {
             switch (option) {
 
                 case "1":
-
+                	// --- AUTHENTICATION LAYER (JPA) ---
                     System.out.print("Username: ");
                     String username = sc.nextLine();
 
@@ -88,13 +92,14 @@ public class Main {
                     bioLabPOJOS.User loggedUser = auth.loginAndReturnUser(username, password);
 
                     if (loggedUser != null) {
-
+                    	// Retrieve the role and identify the user's permissions
                         String roleName = loggedUser.getRole() != null
                                 ? loggedUser.getRole().getRoleName()
                                 : "UNKNOWN";
 
                         System.out.println("Logged in as: " + roleName);
-
+                     // --- DATA PERSISTENCE LAYER (JDBC) ---
+                        // Once authenticated, we initialize JDBC managers for clinical operations
                         ConnectionManager cm = new ConnectionManager();
                         JDBCPatientManager patientManager = new JDBCPatientManager(cm);
                         JDBCPhysicianManager physicianManager = new JDBCPhysicianManager(cm);
@@ -106,8 +111,9 @@ public class Main {
                         boolean logout = false;
 
                         while (!logout) {
-
-                            // ================= ADMIN =================
+                        	// ROLE-BASED ACCESS CONTROL (RBAC) LOGIC
+                            
+                            // ADMIN: Full system access and XML/HTML utilities
                             if (roleName.equalsIgnoreCase("ADMIN")) {
 
                                 System.out.println("\n===== ADMIN MENU =====");
@@ -166,8 +172,7 @@ public class Main {
                                         break;
                                 }
                             }
-
-                            // ================= PATIENT =================
+                         // PATIENT: Limited to personal clinical history (Read-only)
                             else if (roleName.equalsIgnoreCase("PATIENT")) {
 
                                 System.out.println("\n===== PATIENT MENU =====");
@@ -180,6 +185,7 @@ public class Main {
 
                                 switch (opt) {
 	                                case "1":
+	                                	// Data filtering: Patient only sees their own data via JDBC
 	                                    if (loggedUser.getPatientId() != null) {
 	                                        java.util.List<bioLabPOJOS.LaboratoryOrder> myOrders =
 	                                                labOrderManager.getOrdersByPatientId(loggedUser.getPatientId());
@@ -233,8 +239,7 @@ public class Main {
                                         break;
                                 }
                             }
-
-                            // ================= PHYSICIAN =================
+                         // PHYSICIAN: Access to assigned patients and analytics
                             else if (roleName.equalsIgnoreCase("PHYSICIAN")) {
 
                                 System.out.println("\n===== PHYSICIAN MENU =====");
@@ -287,7 +292,7 @@ public class Main {
                                 }
                             }
                             
-                         // ----------------- LAB TECHNICIAN -----------------
+                         // TECH: Test lifecycle management and result entry
                             else if (roleName.equalsIgnoreCase("LAB_TECHNICIAN")) {
 
                                 System.out.println("\n===== LAB TECHNICIAN MENU =====");

@@ -1,37 +1,26 @@
-/*
- * package JPA; //HAY QUE REVISAR
- * 
- * import javax.persistence.EntityManager; import
- * javax.persistence.EntityManagerFactory; import javax.persistence.Persistence;
- * 
- * public class JPAUtil { // El nombre "BioLabPU" debe ser el mismo que pusiste
- * en tu persistence.xml private static final EntityManagerFactory emf =
- * Persistence.createEntityManagerFactory("BioLabPU");
- * 
- * public static EntityManager getEntityManager() { return
- * emf.createEntityManager(); }
- * 
- * public static void close() { if (emf != null && emf.isOpen()) { emf.close();
- * } } }
- */
 package JPA;
 
-
 import javax.persistence.*;
-
+/**
+ * Utility class to manage the JPA EntityManagerFactory.
+ * This class follows the Singleton pattern to ensure that the 
+ * Persistence Unit is only initialized once, saving system resources.
+ */
 public class JPAUtil {
     private static final EntityManagerFactory emf;
 
     static {
         try {
-            // "BioLabPU" debe ser el nombre que pusiste en persistence.xml
+        	// "BioLabPU" must match the name defined in your persistence.xml file
             emf = Persistence.createEntityManagerFactory("BioLabPU");
         } catch (Throwable ex) {
             System.err.println("Error al crear la Factoría de EntityManager: " + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
-
+    /**
+     * @return The global EntityManagerFactory instance for the BioLab application.
+     */
     public static EntityManagerFactory getEntityManagerFactory() {
         return emf;
     }
