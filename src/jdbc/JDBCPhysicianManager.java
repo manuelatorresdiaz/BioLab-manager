@@ -70,18 +70,33 @@ public class JDBCPhysicianManager implements PhysicianManager {
 
     @Override
     public void deletePhysician(int physicianId) {
+
         String sql = "DELETE FROM Physician WHERE physicianId=?";
 
         try (Connection conn = cm.connect()) {
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, physicianId);
 
             stmt.executeUpdate();
+
             System.out.println("Physician deleted successfully.");
 
         } catch (SQLException e) {
-            System.out.println("Error deleting physician.");
-            e.printStackTrace();
+
+            // Foreign key restriction
+            if (e.getMessage().contains("FOREIGN KEY constraint failed")) {
+
+                System.out.println("\nERROR:");
+                System.out.println("This physician has laboratory orders assigned.");
+                System.out.println("Please reassign or delete the orders before deleting the physician.");
+
+            } else {
+
+                System.out.println("Error deleting physician.");
+                e.printStackTrace();
+            }
+
         } finally {
             cm.disconnect();
         }
