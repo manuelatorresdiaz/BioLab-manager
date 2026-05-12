@@ -9,7 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * JDBC Implementation for the Order-Test relationship.
+ * This class handles the persistence of clinical results and performs 
+ * statistical analysis on laboratory data.
+ */
 public class JDBCOrderTestManager implements OrderTestManager {
 
     private ConnectionManager cm;
@@ -188,7 +192,7 @@ public class JDBCOrderTestManager implements OrderTestManager {
         }
         return history;
     }
-
+ // --- ANALYTICS AND CLINICAL LOGIC ---
     @Override
     public List<Integer> getMostRequestedTests() {
         List<Integer> topTests = new ArrayList<>();
@@ -302,4 +306,5 @@ public class JDBCOrderTestManager implements OrderTestManager {
 
         return results;
     }
+ // CRUD methods (updateOrderTest, deleteOrderTest, etc.) follow the same pattern...
 }

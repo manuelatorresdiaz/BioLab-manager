@@ -9,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * JDBC Implementation for clinical reference thresholds.
+ * Manages normal and critical boundaries used to interpret patient results.
+ */
 public class JDBCReferenceRangeManager implements ReferenceRangeManager {
 
     private ConnectionManager cm;
@@ -20,8 +23,8 @@ public class JDBCReferenceRangeManager implements ReferenceRangeManager {
 
     @Override
     public void addReferenceRange(ReferenceRange referenceRange) {
-        // Inserts a new reference range into the database
-        String sql = "INSERT INTO ReferenceRange (minValue, maxValue, criticalMin, criticalMax, units) VALUES (?, ?, ?, ?, ?)";
+    	// Defines the safety boundaries for a specific laboratory test
+    	String sql = "INSERT INTO ReferenceRange (minValue, maxValue, criticalMin, criticalMax, units) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = cm.connect()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -154,4 +157,5 @@ public class JDBCReferenceRangeManager implements ReferenceRangeManager {
 
         return referenceRanges;
     }
+ // updateReferenceRange, deleteReferenceRange, and getAll follow the standard JDBC pattern...
 }
