@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  * UI component for managing the Laboratory Test Catalog.
- * Defines the types of analyses the laboratory is capable of performing.
+ * Defines the types of analysis the laboratory is capable of performing.
  */
 
 public class TestMenuUI {

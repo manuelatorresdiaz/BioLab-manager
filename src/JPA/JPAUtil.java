@@ -14,7 +14,7 @@ public class JPAUtil {
         	// "BioLabPU" must match the name defined in your persistence.xml file
             emf = Persistence.createEntityManagerFactory("BioLabPU");
         } catch (Throwable ex) {
-            System.err.println("Error al crear la Factoría de EntityManager: " + ex);
+            System.err.println("Error creating the EntityManager Factory: " + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
