@@ -4,7 +4,7 @@ import java.util.List;
 import bioLabPOJOS.Test;
 /**
  * Interface defining the management of the Laboratory Test Catalog.
- * It serves as the primary registry for all types of clinical analyses 
+ * It serves as the primary registry for all types of clinical analysis 
  * the laboratory is equipped to perform.
  */
 public interface TestManager {

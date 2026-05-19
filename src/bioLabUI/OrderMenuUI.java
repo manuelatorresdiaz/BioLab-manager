@@ -61,7 +61,7 @@ public class OrderMenuUI {
                 case 5: deleteOrder(); break;
                 case 6:viewPatientOrders(); break;
                 case 7:viewPendingOrders(); break;
-                case 0: System.out.println("Bye"); break;
+                case 0: System.out.println("Exiting Lab Order Menu..."); break;
                 default: System.out.println("Invalid");
             }
 

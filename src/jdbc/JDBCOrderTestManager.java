@@ -179,7 +179,7 @@ public class JDBCOrderTestManager implements OrderTestManager {
                         rs.getInt("orderId"),
                         rs.getInt("testId"),
                         rs.getDouble("resultValue"),
-                        new java.util.Date(), // Usando el estilo de tu equipo
+                        new java.util.Date(), 
                         rs.getString("resultStatus")
                 );
                 history.add(ot);
@@ -256,7 +256,7 @@ public class JDBCOrderTestManager implements OrderTestManager {
                         rs.getInt("orderId"),
                         rs.getInt("testId"),
                         rs.getDouble("resultValue"),
-                        new java.util.Date(), // Usando el estilo de tu equipo
+                        new java.util.Date(), 
                         rs.getString("resultStatus")
                 );
                 abnormalResults.add(ot);
