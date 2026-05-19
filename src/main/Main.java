@@ -337,3 +337,5 @@ public class Main {
         sc.close();
     }
 }
+
+// C:\Users\marcg\OneDrive\Imágenes\patients\patient1.png.png
