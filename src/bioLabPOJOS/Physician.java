@@ -1,6 +1,7 @@
 package bioLabPOJOS;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.*;
 
 /**
  * Represents a Physician (Doctor) within the BioLab system.
@@ -8,6 +9,8 @@ import java.io.Serializable;
  * and their respective specialties.
  */
 
+@XmlRootElement(name = "Physician")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Physician implements Serializable {
 
     private int physicianId;
@@ -18,17 +21,26 @@ public class Physician implements Serializable {
     private String email;
 
     /**
+     * Empty constructor required by JAXB.
+     */
+    
+    public Physician() {
+    }
+
+    /**
      * Parameterized constructor to initialize a physician's profile.
      * 
      * @param physicianId Unique database identifier.
      * @param firstName   Physician's given name.
      * @param lastName    Physician's family name.
-     * @param specialty   Medical field of expertise (e.g., Cardiology, Oncology).
+     * @param specialty   Medical field of expertise.
      * @param phone       Contact telephone number.
      * @param email       Professional contact email.
      */
-    
-    public Physician(int physicianId, String firstName, String lastName, String specialty, String phone, String email) {
+
+    public Physician(int physicianId, String firstName, String lastName,
+                     String specialty, String phone, String email) {
+
         this.physicianId = physicianId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,8 +49,6 @@ public class Physician implements Serializable {
         this.email = email;
     }
 
- // Getters and Setters
-    
     public int getPhysicianId() {
         return physicianId;
     }
@@ -51,19 +61,39 @@ public class Physician implements Serializable {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getSpecialty() {
         return specialty;
     }
 
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

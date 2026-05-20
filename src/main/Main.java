@@ -155,8 +155,29 @@ public class Main {
 
 
                                     case "6":
+
                                         XMLDataBase db = new XMLDataBase();
+
+                                        db.setPatients(patientManager.getAllPatients());
+
+                                        db.setPhysicians(physicianManager.getAllPhysicians());
+
+                                        db.setLaboratoryOrders(labOrderManager.getAllOrders());
+
+                                        db.setTests(testManager.getAllTests());
+
+                                        db.setOrderTests(orderTestManager.getAllOrderTests());
+
+                                        db.setReferenceRanges(rangeManager.getAllReferenceRanges());
+
+                                        JPA.JPAUserManager userManager = new JPA.JPAUserManager();
+
+                                        db.setUsers(userManager.getAllUsers());
+
+                                        db.setRoles(userManager.getAllRoles());
+
                                         xmlManager.databaseToXML(db, "export.xml");
+
                                         break;
 
                                     case "7":

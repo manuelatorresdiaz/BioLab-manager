@@ -1,9 +1,10 @@
 package JPA;
 
 import interfaces.UserManager;
+
 import javax.persistence.*;
 import bioLabPOJOS.User;
-
+import bioLabPOJOS.Role;
 import java.util.List;
 
 import java.security.MessageDigest;
@@ -159,6 +160,21 @@ public class JPAUserManager implements UserManager {
         }
     }
     
+    public List<Role> getAllRoles() {
+
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+
+        try {
+
+            Query q = em.createQuery("SELECT r FROM Role r");
+
+            return q.getResultList();
+
+        } finally {
+
+            em.close();
+        }
+    }
 
     public String encryptPassword(String password) {
         try {

@@ -3,11 +3,37 @@
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>BioLab Report</title>
         <style>
-        body { font-family: Arial; }
-        table { border-collapse: collapse; width: 60%; margin-bottom: 20px; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        th { background-color: #ddd; }
-        h2 { margin-top: 30px; }
+
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #dddddd;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #005599;
+        }
+
     </style>
     </head>
     <body>
@@ -17,11 +43,170 @@
             <tr>
                 <th>ID</th><th>Username</th><th>Password</th>
             </tr>
+            <tr>
+                <td></td><td>admin</td><td>03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4</td>
+            </tr>
+            <tr>
+                <td></td><td>patient1</td><td>03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4</td>
+            </tr>
+            <tr>
+                <td></td><td>physician1</td><td>03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4</td>
+            </tr>
+            <tr>
+                <td></td><td>tech1</td><td>03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4</td>
+            </tr>
         </table>
         <h2>Roles</h2>
         <table>
             <tr>
                 <th>ID</th><th>Role Name</th>
+            </tr>
+            <tr>
+                <td></td><td>ADMIN</td>
+            </tr>
+            <tr>
+                <td></td><td>PATIENT</td>
+            </tr>
+            <tr>
+                <td></td><td>PHYSICIAN</td>
+            </tr>
+            <tr>
+                <td></td><td>LAB_TECHNICIAN</td>
+            </tr>
+        </table>
+        <h2>Patients</h2>
+        <table>
+            <tr>
+                <th>ID</th><th>First Name</th><th>Last Name</th><th>Date Of Birth</th><th>Gender</th><th>Phone</th><th>Address</th>
+            </tr>
+            <tr>
+                <td>1</td><td>John</td><td>Smith</td><td>1990-05-12</td><td>Male</td><td>600111222</td><td>New York</td>
+            </tr>
+            <tr>
+                <td>2</td><td>Anna</td><td>Brown</td><td>1985-11-03</td><td>Female</td><td>600333444</td><td>Chicago</td>
+            </tr>
+            <tr>
+                <td>3</td><td>Michael</td><td>Johnson</td><td>2000-01-20</td><td>Male</td><td>600555666</td><td>Boston</td>
+            </tr>
+            <tr>
+                <td>4</td><td>Emily</td><td>Davis</td><td>1998-07-08</td><td>Female</td><td>600777888</td><td>Seattle</td>
+            </tr>
+            <tr>
+                <td>5</td><td>Robert</td><td>Miller</td><td>1975-03-15</td><td>Male</td><td>600999000</td><td>Miami</td>
+            </tr>
+        </table>
+        <h2>Physicians</h2>
+        <table>
+            <tr>
+                <th>ID</th><th>First Name</th><th>Last Name</th><th>Specialty</th><th>Phone</th><th>Email</th>
+            </tr>
+            <tr>
+                <td>1</td><td>Laura</td><td>Wilson</td><td>Cardiology</td><td>700111222</td><td>laura@hospital.com</td>
+            </tr>
+            <tr>
+                <td>2</td><td>David</td><td>Taylor</td><td>Hematology</td><td>700333444</td><td>david@hospital.com</td>
+            </tr>
+            <tr>
+                <td>3</td><td>Sarah</td><td>Anderson</td><td>Endocrinology</td><td>700555666</td><td>sarah@hospital.com</td>
+            </tr>
+        </table>
+        <h2>Laboratory Orders</h2>
+        <table>
+            <tr>
+                <th>Order ID</th><th>Order Date</th><th>Status</th>
+            </tr>
+            <tr>
+                <td>1</td><td>2026-05-01</td><td>pending</td>
+            </tr>
+            <tr>
+                <td>2</td><td>2026-05-02</td><td>completed</td>
+            </tr>
+            <tr>
+                <td>3</td><td>2026-05-03</td><td>pending</td>
+            </tr>
+            <tr>
+                <td>4</td><td>2026-05-04</td><td>processing</td>
+            </tr>
+            <tr>
+                <td>5</td><td>2026-05-05</td><td>completed</td>
+            </tr>
+            <tr>
+                <td>6</td><td>2026-05-19</td><td>pending</td>
+            </tr>
+            <tr>
+                <td>7</td><td>2025-05-19</td><td>pending</td>
+            </tr>
+        </table>
+        <h2>Tests</h2>
+        <table>
+            <tr>
+                <th>Test ID</th><th>Test Name</th><th>Unit</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>1</td><td>Glucose</td><td>mg/dL</td><td>Blood sugar analysis</td>
+            </tr>
+            <tr>
+                <td>2</td><td>Hemoglobin</td><td>g/dL</td><td>Hemoglobin measurement</td>
+            </tr>
+            <tr>
+                <td>3</td><td>Cholesterol</td><td>mg/dL</td><td>Total cholesterol test</td>
+            </tr>
+            <tr>
+                <td>4</td><td>TSH</td><td>mIU/L</td><td>Thyroid hormone test</td>
+            </tr>
+            <tr>
+                <td>5</td><td>Vitamin D</td><td>ng/mL</td><td>Vitamin D analysis</td>
+            </tr>
+        </table>
+        <h2>Order Tests</h2>
+        <table>
+            <tr>
+                <th>Order ID</th><th>Test ID</th><th>Result Value</th><th>Result Date</th><th>Status</th>
+            </tr>
+            <tr>
+                <td>1</td><td>1</td><td>95.5</td><td>2026-05-20T19:40:20.472+02:00</td><td>normal</td>
+            </tr>
+            <tr>
+                <td>1</td><td>2</td><td>13.2</td><td>2026-05-20T19:40:20.472+02:00</td><td>normal</td>
+            </tr>
+            <tr>
+                <td>2</td><td>3</td><td>250.0</td><td>2026-05-20T19:40:20.472+02:00</td><td>critical</td>
+            </tr>
+            <tr>
+                <td>3</td><td>4</td><td>2.1</td><td>2026-05-20T19:40:20.472+02:00</td><td>normal</td>
+            </tr>
+            <tr>
+                <td>4</td><td>5</td><td>15.0</td><td>2026-05-20T19:40:20.472+02:00</td><td>low</td>
+            </tr>
+            <tr>
+                <td>5</td><td>1</td><td>180.0</td><td>2026-05-20T19:40:20.472+02:00</td><td>high</td>
+            </tr>
+            <tr>
+                <td>5</td><td>3</td><td>220.0</td><td>2026-05-20T19:40:20.472+02:00</td><td>high</td>
+            </tr>
+            <tr>
+                <td>6</td><td>3</td><td>23.5</td><td>2026-05-20T19:40:20.472+02:00</td><td>critical</td>
+            </tr>
+        </table>
+        <h2>Reference Ranges</h2>
+        <table>
+            <tr>
+                <th>ID</th><th>Min Value</th><th>Max Value</th><th>Critical Min</th><th>Critical Max</th><th>Units</th>
+            </tr>
+            <tr>
+                <td>1</td><td>70.0</td><td>110.0</td><td>50.0</td><td>250.0</td><td>mg/dL</td>
+            </tr>
+            <tr>
+                <td>2</td><td>12.0</td><td>17.0</td><td>7.0</td><td>25.0</td><td>g/dL</td>
+            </tr>
+            <tr>
+                <td>3</td><td>100.0</td><td>200.0</td><td>50.0</td><td>300.0</td><td>mg/dL</td>
+            </tr>
+            <tr>
+                <td>4</td><td>0.4</td><td>4.0</td><td>0.1</td><td>10.0</td><td>mIU/L</td>
+            </tr>
+            <tr>
+                <td>5</td><td>20.0</td><td>50.0</td><td>5.0</td><td>100.0</td><td>ng/mL</td>
             </tr>
         </table>
     </body>
