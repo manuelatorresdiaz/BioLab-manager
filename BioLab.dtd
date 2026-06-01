@@ -1,19 +1,46 @@
-<!-- Rule 1: The database contains a list of Users and a list of Roles -->
-<!ELEMENT BioLabDatabase (Users, Roles)>
+<!-- Rule 1: The database contains all BioLab entities -->
+<!ELEMENT BioLabDatabase
+(
+    Users,
+    Roles,
+    Patients,
+    Physicians,
+    LaboratoryOrders,
+    Tests,
+    OrderTests,
+    ReferenceRanges,
+    LaboratoryTechnicians,
+    Administrators
+)>
 
-<!-- Rule 2: Lists can contain zero or more users/roles -->
+<!-- Rule 2: Collections may contain zero or more records -->
 <!ELEMENT Users (User*)>
 <!ELEMENT Roles (Role*)>
+<!ELEMENT Patients (Patient*)>
+<!ELEMENT Physicians (Physician*)>
+<!ELEMENT LaboratoryOrders (LaboratoryOrder*)>
+<!ELEMENT Tests (Test*)>
+<!ELEMENT OrderTests (OrderTest*)>
+<!ELEMENT ReferenceRanges (ReferenceRange*)>
+<!ELEMENT LaboratoryTechnicians (LaboratoryTechnician*)>
+<!ELEMENT Administrators (Administrator*)>
 
-<!-- Rule 3: A User has a username, a password, and optionally a role -->
-<!ELEMENT User (username, password, role?)>
+<!-- Rule 3: A User contains credentials and optional profile references -->
+<!ELEMENT User
+(
+    username,
+    password,
+    role?,
+    patientId?,
+    physicianId?
+)>
 <!ATTLIST User id CDATA #REQUIRED>
 
-<!-- Rule 4: Data types for User fields -->
+<!-- Rule 4: User credential fields store text data -->
 <!ELEMENT username (#PCDATA)>
 <!ELEMENT password (#PCDATA)>
 
-<!-- Rule 5: Role definition (inside User and in the main list) -->
+<!-- Rule 5: Roles can be embedded in Users or stored in the global Role list -->
 <!ELEMENT role (roleName)>
 <!ATTLIST role id CDATA #IMPLIED>
 
@@ -21,3 +48,120 @@
 <!ATTLIST Role id CDATA #REQUIRED>
 
 <!ELEMENT roleName (#PCDATA)>
+
+<!-- Rule 6: A Patient stores demographic and contact information -->
+<!ELEMENT Patient
+(
+    address,
+    dateOfBirth,
+    firstName,
+    gender,
+    lastName,
+    patientId,
+    phone
+)>
+
+<!-- Rule 7: Patient fields contain textual information -->
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT dateOfBirth (#PCDATA)>
+<!ELEMENT firstName (#PCDATA)>
+<!ELEMENT gender (#PCDATA)>
+<!ELEMENT lastName (#PCDATA)>
+<!ELEMENT patientId (#PCDATA)>
+<!ELEMENT phone (#PCDATA)>
+
+<!-- Rule 8: A Physician stores professional and contact information -->
+<!ELEMENT Physician
+(
+    physicianId,
+    firstName,
+    lastName,
+    specialty,
+    phone,
+    email
+)>
+
+<!ELEMENT physicianId (#PCDATA)>
+<!ELEMENT specialty (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+
+<!-- Rule 9: A LaboratoryOrder stores order tracking information -->
+<!ELEMENT LaboratoryOrder
+(
+    orderId,
+    orderDate,
+    status
+)>
+
+<!ELEMENT orderId (#PCDATA)>
+<!ELEMENT orderDate (#PCDATA)>
+<!ELEMENT status (#PCDATA)>
+
+<!-- Rule 10: A Test stores catalog information about a laboratory examination -->
+<!ELEMENT Test
+(
+    description,
+    testId,
+    testName,
+    unit
+)>
+
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT testId (#PCDATA)>
+<!ELEMENT testName (#PCDATA)>
+<!ELEMENT unit (#PCDATA)>
+
+<!-- Rule 11: An OrderTest stores the result of a test performed for an order -->
+<!ELEMENT OrderTest
+(
+    orderId,
+    resultDate,
+    resultStatus,
+    resultValue,
+    testId
+)>
+
+<!ELEMENT resultDate (#PCDATA)>
+<!ELEMENT resultStatus (#PCDATA)>
+<!ELEMENT resultValue (#PCDATA)>
+
+<!-- Rule 12: A ReferenceRange defines normal and critical boundaries -->
+<!ELEMENT ReferenceRange
+(
+    criticalMax,
+    criticalMin,
+    maxValue,
+    minValue,
+    referenceId,
+    units
+)>
+
+<!ELEMENT criticalMax (#PCDATA)>
+<!ELEMENT criticalMin (#PCDATA)>
+<!ELEMENT maxValue (#PCDATA)>
+<!ELEMENT minValue (#PCDATA)>
+<!ELEMENT referenceId (#PCDATA)>
+<!ELEMENT units (#PCDATA)>
+
+<!-- Rule 13: A LaboratoryTechnician stores staff information -->
+<!ELEMENT LaboratoryTechnician
+(
+    technicianId,
+    fullName,
+    email,
+    shiftName
+)>
+
+<!ELEMENT technicianId (#PCDATA)>
+<!ELEMENT fullName (#PCDATA)>
+<!ELEMENT shiftName (#PCDATA)>
+
+<!-- Rule 14: An Administrator stores system administration data -->
+<!ELEMENT Administrator
+(
+    adminId,
+    fullName,
+    email
+)>
+
+<!ELEMENT adminId (#PCDATA)>
